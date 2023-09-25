@@ -102,4 +102,9 @@ class Bootcamp02_model extends CI_Model
 
         echo json_encode($output);
     }
+
+    public function save($data)
+    {
+        return $this->db->insert('karyawan', $data);
+    }
 }
