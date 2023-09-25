@@ -51,7 +51,7 @@ echo "username : ".$user;
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <form id="form-input" action="<?php echo site_url('bootcamp07/addData') ?>" method="post" enctype="multipart/form-data">
+    <form id="form-input" id="form-input">
 	<div class="form-group">
 	<label for="nik">NIK</label>
     <input type="text" class="form-control" id="nik" name="nik" placeholder="Input NIK" required>
@@ -83,9 +83,9 @@ echo "username : ".$user;
 	<div class="form-group">
 	<label for="jabatan">Jabatan</label>
     <select  type="text" name="jabatan" class="form-control" id="jabatan" required>
-    <option value="staff">Staff</option>
-    <option value="supervisor">Supervisor</option>
-	<option value="manager">Manager</option>
+    <option type="text" value="staff">Staff</option>
+    <option type="text" value="supervisor">Supervisor</option>
+	<option type="text" value="manager">Manager</option>
     </select>
     </div>    
 	<div class="form-group">
@@ -105,7 +105,7 @@ echo "username : ".$user;
     createdTimeInput.value = currentDateTime;
 	});
 	</script>
-	<button type="submit" id="simpan" class="btn btn-primary">Submit</button>
+  <input type="button" name="btncheck" id="btncheck" value="Submit" class="btn btn-primary">
     </form>
   </div>
 </div>
@@ -136,22 +136,25 @@ window.onclick = function(event) {
 <script src="<?=base_url()?>modules/bootcamp07/js/jquery-ui.js"></script>
 <script src="<?=base_url();?>modules/bootcamp07/js/jqGrid/jquery.jqGrid.js"></script>
 <script src="<?=base_url();?>modules/bootcamp07/js/jqGrid/i18n/grid.locale-en.js"></script>
-<script src="<?php echo base_url();?>modules/bootcamp07/js/bootcamp07.js?v=<?=rand(0,20);?>"></script>
+<script src="<?php echo base_url();?>modules/bootcamp07/js/bootcamp07.js?v=<?=rand(0,20);?>">
+<script src="<?=base_url()?>modules/bootcamp07/js/Ajaxform.js"></script>
+</script>
+
+</body>
 <script>
     $(document).ready(function() {
       var grid_selector = $("#userKaryawan");
       grid_selector.on("click", ".edit-button", function () {
-        var rowId = $(this).data("id");
+        var rowId = $(this).data("nik");
         if (confirm("Are you sure you want to edit this item?")) {
           console.log("Edit button clicked for row with ID: " + rowId);
         }
       });
       grid_selector.on("click", ".delete-button", function () {
-        var rowId = $(this).data("id");
+        var rowId = $(this).data("nik");
         if (confirm("Are you sure you want to delete this item?")) {
           console.log("Delete button clicked for row with ID: " + rowId);
         }
       });
     });
 </script>
-</body>

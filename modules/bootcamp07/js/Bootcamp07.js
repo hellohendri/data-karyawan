@@ -35,10 +35,10 @@ grid_selector.jqGrid({
 		{name: 'created_by', width: 150, sorttype: false, editable: false },
 		{name: 'created_time', width: 150, sorttype: false, editable: false },
 		{name: 'edit', width: 50, sortable: false, formatter: function (cellValue, options, rowObject) {
-			return '<button class="edit-button" data-id="' + options.rowId + '">Edit</button>';}
+			return '<button class="edit-button" data-nik="' + options.rowId + '">Edit</button>';}
 		},
 		{name: 'delete', width: 60, sortable: false, formatter: function (cellValue, options, rowObject) {
-			return '<button class="delete-button" data-id="' + options.rowId + '">Delete</button>';}
+			return '<button class="delete-button" data-nik="' + options.rowId + '">Delete</button>';}
 		},
 	], 
 

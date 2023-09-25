@@ -104,7 +104,7 @@ class Bootcamp07_model extends CI_Model
         echo json_encode($output); 
 	}
 	
-	function save() {
+	function save() {		
 		$nik = $this->input->post('nik');
 		$nama = $this->input->post('nama');
 		$tempat_lahir = $this->input->post('tempat_lahir');
@@ -127,9 +127,52 @@ class Bootcamp07_model extends CI_Model
 			'jabatan' => $jabatan,
 			'created_by' => $created_by,
 			'created_time' => $created_time,
-			);
+		);
 		
-		$this->db->insert('karyawan',$data);
+		$this->db->select('*');
+		$this->db->from('karyawan');
+		$this->db->where('nik',$this->input->post('nik'));
+		$result=$this->db->get();
+			
+		if($result->num_rows()>0){
+			$val=array();
+			foreach($result->result_array() as $row){
+					$val[]=$row;
+			}
+				$data=array('status'=>'success','message'=>'Data Sudah Tersedia','data'=>$val);
+		}else{
+			$this->db->insert('karyawan',$data);
+			return true;
+		}
+	}
+
+	function edit($nik) {
+		$nama = $this->input->post('nama');
+		$tempat_lahir = $this->input->post('tempat_lahir');
+		$tanggal_lahir = $this->input->post('tanggal_lahir');
+		$umur = $this->input->post('umur');
+		$alamat = $this->input->post('alamat');
+		$telp = $this->input->post('telp');
+		$jabatan = $this->input->post('nama');
+		
+		$data = array(
+			'nama' => $nama,
+			'tempat_lahir' => $tempat_lahir,
+			'tanggal_lahir' => $tanggal_lahir,
+			'umur' => $umur,
+			'alamat' => $alamat,
+			'telp' => $telp,
+			'jabatan' => $jabatan,
+		);
+		
+		$where = array('nik' => $nik);
+		$this->db->get_where('karyawan',$data);
 		return true;
 	}
+
+	function delete($nik) {
+		$this->db->where($nik);
+		$this->db->delete($table);
+	}
+	
 }	

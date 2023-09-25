@@ -26,4 +26,14 @@ class Bootcamp07 extends CI_Controller {
 		$this->bootcamp07_model->save();
 		redirect('bootcamp07/?id=anggi');
 	}
+	
+	public function deleteData($nik){
+		$this->bootcamp07_model->delete($nik);
+		redirect('bootcamp07/?id=anggi');
+	}
+	
+	function edit($nik){
+		$this->bootcamp07_model->edit($nik);
+		redirect('bootcamp07/?id=anggi');
+	}
 }
