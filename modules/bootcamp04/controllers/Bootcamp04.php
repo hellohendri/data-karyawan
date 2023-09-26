@@ -3,57 +3,74 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Bootcamp04 extends CI_Controller {
 
-	function __construct() 
-	{
-		parent::__construct($securePage=false);
-		$this->load->model('Bootcamp04_model');
-		$this->load->library('form_validation');
-		$this->load->library('session');
-		
-	}
+    function __construct() 
+    {
+        parent::__construct($securePage = false);
+        $this->load->model('Bootcamp04_model');
+        $this->load->library('form_validation');
+        $this->load->library('session');
+    }
 
-	public function index() 
-	{
-		$data['user'] = $this->input->get_post('id');
+    public function index() 
+    {
+        $data['user'] = $this->input->get_post('id');
 
         // Prepare data for the view
-        $data['karyawan'] = $this->Bootcamp04_model->getListData();
+        $data['karyawan'] = $this->Bootcamp04_model->getKaryawan();
 
         // Load the view
         $this->load->view('Bootcamp04_view', $data);
     }
 
-	public function getListData()
-	{
-		$data = $this->Bootcamp04_model->getListData();
-		echo $data;
-		
-	}
-	public function addKaryawan()
-	{
-		// Store user ID into session 
-		$user = $this->input->get_post('id');
-		$this->session->set_userdata('user_session', $user);
+    public function getKaryawan()
+    {
+        $data = $this->Bootcamp04_model->getKaryawan();
+        echo $data;
+    }
 
-		// Form validation
-		$rules = $this->Bootcamp04_model->rules();
-		$this->form_validation->set_rules($rules);
+    public function addKaryawan()
+    {
+        $data['user'] = $this->session->userdata('user_session');
 
-		// Changing delimiters for this form's errors
-		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+        // Form validation
+        $rules = $this->Bootcamp03_model->rules();
+        $this->form_validation->set_rules($rules);
 
-		if ($this->form_validation->run() == FALSE) {
-			$this->load->view('Bootcamp04_view');
-		} 
-		else 
-		{
-			$this->Bootcamp04_model->addKaryawan();
-			redirect('bootcamp04/?id=' . $_SESSION['user_session']);
-		}
-	}
-	public function breakkaryawan($nik)
-	{
-		$where = array('nik' => $nik);
-		echo $this->Bootcamp04_model->breakkaryawan($where);
-	}
+        // Changing delimiters globally for adding styles
+        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('Bootcamp04_view');
+        } 
+        else 
+        {
+            $this->Bootcamp04_model->addKaryawan();
+            redirect('bootcamp04/?id=' . $_SESSION['user_session']);
+        }
+    }
+
+    public function breakkaryawan($nik)
+    {
+        $where = array('nik' => $nik);
+        echo $this->Bootcamp04_model->breakkaryawan($where);
+    }
+
+    public function nikCheck()
+    {
+        echo $this->Bootcamp04_model->nikCheck();
+    }
+
+    public function editKaryawan($nik) {
+        echo $this->Bootcamp04_model->editKaryawan($nik);
+    }
+
+    public function saveKaryawan() {
+        echo $this->Bootcamp04_model->saveKaryawan();
+    }
+
+    public function delKaryawan($nik)
+    {
+        $where = array('nik' => $nik);
+        echo $this->Bootcamp04_model->delKaryawan($where);
+    }
 }
