@@ -20,7 +20,7 @@
         ?>
 
         <div class="button-wrapper">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addKaryawanModal">Add</button>
+            <button type="button" class="btn btn-primary" id="toggleModalAdd" data-toggle="modal" data-target="#addKaryawanModal">Add</button>
             <button type="button" class="btn btn-warning" id="editKaryawan">Edit</button>
             <input type="button" class="btn btn-danger" id="delKaryawan" value="Delete" />
         </div>

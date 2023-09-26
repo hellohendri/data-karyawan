@@ -1,3 +1,9 @@
+if (!USER_ID) {
+    $('#toggleModalAdd'). prop('disabled', true)
+    $('#editKaryawan'). prop('disabled', true)
+    $('#delKaryawan'). prop('disabled', true)
+}
+
 $("#nikcheck").click(function () {
 
     $.ajax({
@@ -133,7 +139,7 @@ $("#delKaryawan").click(function (e) {
 
                     $.ajax({
                         type: 'POST',
-                        url: SITE_URL + "/bootcamp03/delKaryawan/" + celValue ,
+                        url: SITE_URL + "/bootcamp03/delKaryawan/" + celValue,
                         data: celValue,
                         success: function (response) {
                             var val = JSON.parse(response);
@@ -153,5 +159,5 @@ $("#delKaryawan").click(function (e) {
     else {
         alert("No rows are selected");
     }
-    
+
 });
