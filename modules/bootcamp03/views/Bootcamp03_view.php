@@ -41,6 +41,8 @@
                     <!-- Modal Content  -->
                     <form id="addForm">
                         <div class="modal-body">
+                            <div id="errorGroup"></div>
+                            <br>
                             <div class="form-group">
                                 <label for="nik">NIK</label>
                                 <?php echo form_error('nik'); ?>

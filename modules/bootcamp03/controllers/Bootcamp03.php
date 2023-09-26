@@ -29,8 +29,6 @@ class Bootcamp03 extends CI_Controller
 
 	public function addKaryawan()
 	{
-		$data['user'] = $this->session->userdata('user_session');
-
 		// form validation
 		$rules = $this->Bootcamp03_model->rules();
 		$this->form_validation->set_rules($rules);
@@ -39,10 +37,24 @@ class Bootcamp03 extends CI_Controller
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
 		if ($this->form_validation->run() == FALSE) {
-			$this->load->view('Bootcamp03_view', $data);
+			$errors = validation_errors();
+			$response = array(
+				'success' => false,
+				'errors' => $errors,
+				'message' => 'Validasi form gagal'
+			);
 		} else {
 			echo $this->Bootcamp03_model->addKaryawan();
+
+			$response = array(
+				'success' => true,
+				'message' => 'Data Karyawan Berhasil ditambah'
+			);
 		}
+
+		// Send a JSON response
+		header('Content-Type: application/json');
+		echo json_encode($response);
 	}
 
 	public function nikCheck()
@@ -50,11 +62,13 @@ class Bootcamp03 extends CI_Controller
 		echo $this->Bootcamp03_model->nikCheck();
 	}
 
-	public function editKaryawan($nik) {
+	public function editKaryawan($nik)
+	{
 		echo $this->Bootcamp03_model->editKaryawan($nik);
 	}
 
-	public function saveKaryawan() {
+	public function saveKaryawan()
+	{
 
 		echo $this->Bootcamp03_model->saveKaryawan();
 	}

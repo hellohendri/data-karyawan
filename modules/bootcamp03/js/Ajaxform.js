@@ -1,7 +1,7 @@
 if (!USER_ID) {
-    $('#toggleModalAdd'). prop('disabled', true)
-    $('#editKaryawan'). prop('disabled', true)
-    $('#delKaryawan'). prop('disabled', true)
+    $('#toggleModalAdd').prop('disabled', true)
+    $('#editKaryawan').prop('disabled', true)
+    $('#delKaryawan').prop('disabled', true)
 }
 
 $("#nikcheck").click(function () {
@@ -22,17 +22,20 @@ $("#nikcheck").click(function () {
 });
 
 $('#addKaryawan').click(function () {
-    console.log($('form').serialize());
 
     $.ajax({
         type: 'POST',
         url: SITE_URL + "/bootcamp03/addKaryawan/?id=" + USER_ID,
         data: $('form').serialize(),
         success: function (response) {
-            var val = JSON.parse(response);
-            alert(val.message);
-            grid_selector.trigger('reloadGrid');
-            $('#addKaryawanModal').modal('hide');
+            if (response.success) {
+                alert(response.message);
+                grid_selector.trigger('reloadGrid');
+                $('#addKaryawanModal').modal('hide');
+            } else {
+                alert(response.message);
+                $('#errorGroup').append(response.errors);
+            }
         },
         error: function () {
             alert("akses controller gagal");
