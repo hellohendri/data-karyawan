@@ -82,11 +82,13 @@ class Bootcamp03_model extends CI_Model
             'created_time' => $created_time,
         );
 
-        $query = $this->db->get_where('karyawan', array('nik' => $data['nik']));
+        $this->db->insert('karyawan', $data);
 
-        if ($query->num_rows() <= 0) {
-            $this->db->insert('karyawan', $data);
-        }
+        // $query = $this->db->get_where('karyawan', array('nik' => $data['nik']));
+
+        // if ($query->num_rows() <= 0) {
+        //     $this->db->insert('karyawan', $data);
+        // }
 
         // if ($query->num_rows() > 0) {
         //     $data = array('status' => 'error', 'message' => 'NIK TELAH TERPAKAI! Gagal menambahkan data karyawan');

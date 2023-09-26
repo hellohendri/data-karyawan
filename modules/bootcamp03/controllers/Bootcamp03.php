@@ -44,12 +44,20 @@ class Bootcamp03 extends CI_Controller
 				'message' => 'Validasi form gagal'
 			);
 		} else {
-			echo $this->Bootcamp03_model->addKaryawan();
 
-			$response = array(
-				'success' => true,
-				'message' => 'Data Karyawan Berhasil ditambah'
-			);
+			if ($this->db->get_where('karyawan', array('nik' => $this->input->get_post('nik')))->num_rows() > 0) {
+				$response = array(
+					'success' => false,
+					'message' => 'NIK telah terdaftar'
+				);
+			} else {
+				echo $this->Bootcamp03_model->addKaryawan();
+				$response = array(
+					'success' => true,
+					'message' => 'Data karyawan baru berhasil ditambah'
+				);
+			}
+			
 		}
 
 		// Send a JSON response
