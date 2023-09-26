@@ -54,6 +54,6 @@ class Bootcamp04 extends CI_Controller {
 	public function breakkaryawan($nik)
 	{
 		$where = array('nik' => $nik);
-		echo $this->Bootcamp03_model->breakkaryawan($where);
+		echo $this->Bootcamp04_model->breakkaryawan($where);
 	}
 }
