@@ -33,7 +33,7 @@ class Bootcamp04 extends CI_Controller {
         $data['user'] = $this->session->userdata('user_session');
 
         // Form validation
-        $rules = $this->Bootcamp03_model->rules();
+        $rules = $this->Bootcamp04_model->rules();
         $this->form_validation->set_rules($rules);
 
         // Changing delimiters globally for adding styles
