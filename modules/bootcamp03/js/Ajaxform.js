@@ -4,23 +4,6 @@ if (!USER_ID) {
     $('#delKaryawan').prop('disabled', true)
 }
 
-$("#nikcheck").click(function () {
-
-    $.ajax({
-        type: 'POST',
-        url: SITE_URL + "/bootcamp03/nikCheck",
-        data: { nik: $("#nik").val() },
-        success: function (response) {
-            var val = JSON.parse(response);
-            alert(val.message);
-        },
-        error: function () {
-            alert("akses controller gagal");
-        }
-    });
-
-});
-
 $('#addKaryawan').click(function () {
 
     $.ajax({
@@ -59,9 +42,9 @@ $('#editKaryawan').click(function () {
                 $('#modalBody').empty();
 
                 $.each(val.data, function (key, value) {
-                    html = '<label for="nik">NIK</label>' +
+                    html =
                         '<?php echo form_error("nik"); ?>' +
-                        '<input type="number" class="form-control" id="editNik" name="nik" value="' + value.nik + '" placeholder="Nomor NIK">' +
+                        '<input type="hidden" class="form-control" id="editNik" name="nik" value="' + value.nik + '" placeholder="Nomor NIK">' +
                         '<label for="nama">Nama</label>' +
                         '<?php echo form_error("nama"); ?>' +
                         '<input type="text" class="form-control" id="nama" name="nama" value="' + value.nama + '" placeholder="Nama">' +
