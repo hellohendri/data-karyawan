@@ -33,6 +33,8 @@ class Bootcamp02 extends CI_Controller
 
 	public function add()
 	{
+		$user = $this->input->get_post('id');
+		$data['user'] = $user;
 		$this->load->view('Bootcamp02_add');
 	}
 
@@ -51,6 +53,6 @@ class Bootcamp02 extends CI_Controller
 			'created_time' => date('Y-m-d H:i:s'),
 		);
 		$this->Bootcamp02_model->save($data);
-		redirect('bootcamp02?id='.$this->input->get('id'));
+		redirect('bootcamp02?id=' . $this->input->get('id'));
 	}
 }
