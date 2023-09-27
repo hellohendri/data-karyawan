@@ -21,7 +21,8 @@
 
         <div class="button-wrapper">
             <div class="export-wrapper">
-                <input type="button" class="btn btn-success" value="Export to Excel" />
+                <a href="<?php echo base_url('index.php/bootcamp03/exportToExcel'); ?>" class="btn btn-success">Export to Excel</a>
+
             </div>
             <div class="crud-wrapper">
                 <button type="button" class="btn btn-primary" id="toggleModalAdd" data-toggle="modal" data-target="#addKaryawanModal">Add</button>
