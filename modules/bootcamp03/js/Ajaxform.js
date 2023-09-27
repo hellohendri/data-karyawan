@@ -39,33 +39,17 @@ $('#editKaryawan').click(function () {
             data: { nik: celValue },
             success: function (response) {
                 var val = JSON.parse(response);
-                $('#modalBody').empty();
 
                 $.each(val.data, function (key, value) {
-                    html =
-                        '<?php echo form_error("nik"); ?>' +
-                        '<input type="hidden" class="form-control" id="editNik" name="nik" value="' + value.nik + '" placeholder="Nomor NIK">' +
-                        '<label for="nama">Nama</label>' +
-                        '<?php echo form_error("nama"); ?>' +
-                        '<input type="text" class="form-control" id="nama" name="nama" value="' + value.nama + '" placeholder="Nama">' +
-                        '<label for="tempatLahir">Tempat Lahir</label>' +
-                        '<?php echo form_error("tempat_lahir"); ?>' +
-                        '<input type="text" class="form-control" id="tempatLahir" name="tempatLahir" value="' + value.tempat_lahir + '" placeholder="Tempat Lahir">' +
-                        '<label for="tanggalLahir">Tanggal Lahir</label>' +
-                        '<?php echo form_error("tanggal_lahir"); ?>' +
-                        '<input type="date" class="form-control" id="tanggalLahir" name="tanggalLahir" value="' + value.tanggal_lahir + '" placeholder="Tanggal Lahir">' +
-                        '<label for="alamat">Alamat</label>' +
-                        '<?php echo form_error("alamat"); ?>' +
-                        '<input type="text" class="form-control" id="alamat" name="alamat" value="' + value.alamat + '" placeholder="Alamat">' +
-                        '<label for="telp">Telp</label>' +
-                        '<?php echo form_error("telp"); ?>' +
-                        '<input type="number" class="form-control" id="telp" name="telp" value="' + value.telp + '" placeholder="Telepon">' +
-                        '<label for="jabatan">Jabatan</label>' +
-                        '<?php echo form_error("jabatan"); ?>' +
-                        '<div class="#selectJabatan"><select class="form-control" id="jabatan" name="jabatan"><option value="manager">manager</option><option value="staff">staff</option><option value="supervisor">supervisor</option></select></div>'
+                    $('input#nik').val(value.nik);
+                    $('input#nama').val(value.nama);
+                    $('input#tempat-lahir').val(value.tempat_lahir);
+                    $('input#tanggal-lahir').val(value.tanggal_lahir);
+                    $('textarea#alamat').val(value.alamat);
+                    $('input#telp').val(value.telp);
+                    $('input#jabatan').val(value.jabatan);
                 });
-
-                $('#modalBody').append(html);
+                
             },
             error: function () {
                 alert("akses controller gagal");

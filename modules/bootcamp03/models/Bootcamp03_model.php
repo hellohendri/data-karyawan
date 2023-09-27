@@ -107,8 +107,8 @@ class Bootcamp03_model extends CI_Model
     {
         $nik = $this->input->get_post('nik');
         $nama = $this->input->get_post('nama');
-        $tempatLahir = $this->input->get_post('tempatLahir');
-        $tanggalLahir = $this->input->get_post('tanggalLahir');
+        $tempat_lahir = $this->input->get_post('tempat_lahir');
+        $tanggal_lahir = $this->input->get_post('tanggal_lahir');
         $alamat = $this->input->get_post('alamat');
         $telp = $this->input->get_post('telp');
         $jabatan = $this->input->get_post('jabatan');
@@ -116,7 +116,7 @@ class Bootcamp03_model extends CI_Model
         $created_time = date("Y-m-d h:i:s");
 
         // mendapatkan usia karyawan berdasarkan interval tanggal lahir dan current date
-        $birth_date = date_create($tanggalLahir);
+        $birth_date = date_create($tanggal_lahir);
         $current_date = date_create(date("Y-m-d"));
         $interval = date_diff($birth_date, $current_date);
         $umur = $interval->format('%y'); // value usia
@@ -124,8 +124,8 @@ class Bootcamp03_model extends CI_Model
         $data = array(
             'nik' => $nik,
             'nama' => $nama,
-            'tempat_lahir' => $tempatLahir,
-            'tanggal_lahir' => $tanggalLahir,
+            'tempat_lahir' => $tempat_lahir,
+            'tanggal_lahir' => $tanggal_lahir,
             'umur' => $umur,
             'alamat' => $alamat,
             'telp' => $telp,

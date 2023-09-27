@@ -113,7 +113,47 @@
                     <!-- Modal Content  -->
                     <form id="formEdit">
                         <div class="modal-body" id="modalBody">
-                            <!-- Edit Karyawan Form Section Goes Here -->
+                            <div id="errorGroup">
+                                <!-- Form validation errors goes here -->
+                            </div>
+                            <div class="form-group">
+                                <?php echo form_error('nik'); ?>
+                                <input type="hidden" class="form-control" id="nik" name="nik" placeholder="Nomor NIK">
+                            </div>
+                            <div class="form-group">
+                                <label for="nik">Nama</label>
+                                <?php echo form_error('nama'); ?>
+                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama">
+                            </div>
+                            <div class="form-group">
+                                <label for="tempat-lahir">Tempat Lahir</label>
+                                <?php echo form_error('tempat_lahir'); ?>
+                                <input type="text" class="form-control" id="tempat-lahir" name="tempat_lahir" placeholder="Tempat Lahir">
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal-lahir">Tanggal Lahir</label>
+                                <?php echo form_error('tanggal_lahir'); ?>
+                                <input type="date" class="form-control" id="tanggal-lahir" name="tanggal_lahir" placeholder="Tanggal Lahir">
+                            </div>
+                            <div class="form-group">
+                                <label for="alamat">Alamat</label>
+                                <?php echo form_error('alamat'); ?>
+                                <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Alamat"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="telp">Telp</label>
+                                <?php echo form_error('telp'); ?>
+                                <input type="text" class="form-control" id="telp" name="telp" placeholder="No. Telepon">
+                            </div>
+                            <div class="form-group">
+                                <label for="jabatan">Jabatan</label>
+                                <?php echo form_error('jabatan'); ?>
+                                <select class="form-control" id="jabatan" name="jabatan">
+                                    <option>manager</option>
+                                    <option>staff</option>
+                                    <option>supervisor</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
