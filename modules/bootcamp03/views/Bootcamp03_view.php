@@ -20,9 +20,14 @@
         ?>
 
         <div class="button-wrapper">
-            <button type="button" class="btn btn-primary" id="toggleModalAdd" data-toggle="modal" data-target="#addKaryawanModal">Add</button>
-            <button type="button" class="btn btn-warning" id="editKaryawan">Edit</button>
-            <input type="button" class="btn btn-danger" id="delKaryawan" value="Delete" />
+            <div class="export-wrapper">
+                <input type="button" class="btn btn-success" value="Export to Excel" />
+            </div>
+            <div class="crud-wrapper">
+                <button type="button" class="btn btn-primary" id="toggleModalAdd" data-toggle="modal" data-target="#addKaryawanModal">Add</button>
+                <button type="button" class="btn btn-warning" id="editKaryawan">Edit</button>
+                <input type="button" class="btn btn-danger" id="delKaryawan" value="Delete" />
+            </div>
         </div>
 
         <table id="userKaryawan"></table>

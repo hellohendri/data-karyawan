@@ -5,7 +5,7 @@ body {
 .button-wrapper {
     margin: 1rem 0 1rem 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .button-wrapper > button {
