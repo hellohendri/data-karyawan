@@ -4,23 +4,6 @@ if (!USER_ID) {
     $('#delKaryawan').prop('disabled', true)
 }
 
-$("#nikcheck").click(function () {
-
-    $.ajax({
-        type: 'POST',
-        url: SITE_URL + "/bootcamp03/nikCheck",
-        data: { nik: $("#nik").val() },
-        success: function (response) {
-            var val = JSON.parse(response);
-            alert(val.message);
-        },
-        error: function () {
-            alert("akses controller gagal");
-        }
-    });
-
-});
-
 $('#addKaryawan').click(function () {
 
     $.ajax({

@@ -41,13 +41,14 @@
                     <!-- Modal Content  -->
                     <form id="addForm">
                         <div class="modal-body">
-                            <div id="errorGroup"></div>
+                            <div id="errorGroup">
+                                <!-- Form validation errors goes here -->
+                            </div>
                             <br>
                             <div class="form-group">
                                 <label for="nik">NIK</label>
                                 <?php echo form_error('nik'); ?>
-                                <input type="number" class="form-control" id="nik" name="nik" placeholder="Nomor NIK"> <br>
-                                <input type="button" id="nikcheck" class="btn btn-default" value="Check NIK">
+                                <input type="number" class="form-control" id="nik" name="nik" placeholder="Nomor NIK">
                             </div>
                             <div class="form-group">
                                 <label for="nik">Nama</label>

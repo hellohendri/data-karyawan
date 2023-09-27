@@ -83,35 +83,6 @@ class Bootcamp03_model extends CI_Model
         );
 
         $this->db->insert('karyawan', $data);
-
-        // $query = $this->db->get_where('karyawan', array('nik' => $data['nik']));
-
-        // if ($query->num_rows() <= 0) {
-        //     $this->db->insert('karyawan', $data);
-        // }
-
-        // if ($query->num_rows() > 0) {
-        //     $data = array('status' => 'error', 'message' => 'NIK TELAH TERPAKAI! Gagal menambahkan data karyawan');
-        // } else {
-        //     $this->db->insert('karyawan', $data);
-        //     $data = array('status' => 'success', 'message' => 'Data karyawan berhasil ditambahkan');
-        // }
-
-        // return json_encode($data);
-    }
-
-    public function nikCheck()
-    {
-        $nik = $this->input->get_post('nik');
-        $query = $this->db->get_where('karyawan', array('nik' => $nik));
-
-        if ($query->num_rows() > 0) {
-            $data = array('status' => 'success', 'message' => 'NIK ' . $nik . ' sudah terpakai !');
-        } else {
-            $data = array('status' => 'error', 'message' => 'NIK ' . $nik . ' belum dipakai');
-        }
-
-        return json_encode($data);
     }
 
     public function editKaryawan($nik)
