@@ -34,35 +34,43 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="nik" id="nik" placeholder="NIK">
+                                        <input type="text" class="form-control" name="nik" id="nik" placeholder="NIK" value="<?= $this->form_validation->set_value('nik', isset($karyawan) ? $karyawan->nik : null) ?>">
+                                        <?php echo form_error('nik'); ?>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama">
+                                        <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama" value="<?= $this->form_validation->set_value('nama') ?>">
+                                        <?php echo form_error('nama'); ?>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="tempat_lahir" id="tempat_Lahir" placeholder="Tempat Lahir">
+                                        <input type="text" class="form-control" name="tempat_lahir" id="tempat_Lahir" placeholder="Tempat Lahir" value="<?= $this->form_validation->set_value('tempat_lahir') ?>">
+                                        <?php echo form_error('tempat_lahir'); ?>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="tanggal_lahir" id="tanggal_lahir" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Tanggal Lahir">
+                                        <input type="text" class="form-control" name="tanggal_lahir" id="tanggal_lahir" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Tanggal Lahir" value="<?= $this->form_validation->set_value('tanggal_lahir') ?>">
+                                        <?php echo form_error('tanggal_lahir'); ?>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="umur" id="umur" placeholder="Umur">
+                                        <input type="text" class="form-control" name="umur" id="umur" placeholder="Umur" disabled>
+                                        <input type="hidden" id="val_umur" name="val_umur">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group" style="margin-bottom: 28px;">
-                                        <textarea class="form-control" id="alamat" name="alamat" rows="5" placeholder="Alamat"></textarea>
+                                        <textarea class="form-control" id="alamat" name="alamat" rows="5" placeholder="Alamat"><?= $this->form_validation->set_value('alamat') ?></textarea>
+                                        <?php echo form_error('alamat'); ?>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="telp" id="telp" placeholder="Nomor Telepon">
+                                        <input type="text" class="form-control" name="telp" id="telp" placeholder="Nomor Telepon" value="<?= $this->form_validation->set_value('telp') ?>">
+                                        <?php echo form_error('telp'); ?>
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" id="jabatan" name="jabatan">
+                                        <select class="form-control" id="jabatan" name="jabatan" value="<?= $this->form_validation->set_value('jabatan') ?>">
                                             <option selected disabled hidden>Pilih Jabatan</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="staff">Staff</option>
-                                            <option value="supervisor">Supervisor</option>
+                                            <option value="manager" <?php echo set_select('jabatan', 'manager'); ?>>Manager</option>
+                                            <option value="staff" <?php echo set_select('jabatan', 'staff'); ?>>Staff</option>
+                                            <option value="supervisor" <?php echo set_select('jabatan', 'supervisor'); ?>>Supervisor</option>
                                         </select>
+                                        <?php echo form_error('jabatan'); ?>
                                     </div>
                                     <input type="submit" class="btnRegister" value="Submit" />
                                 </div>
@@ -78,6 +86,40 @@
 
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type='text/javascript'>
+        function hitungUmur(tanggalLahir) {
+            var tanggalLahirArray = tanggalLahir.split('-');
+            var tahunLahir = parseInt(tanggalLahirArray[0]);
+            var bulanLahir = parseInt(tanggalLahirArray[1]);
+            var tanggalLahir = parseInt(tanggalLahirArray[2]);
+
+            var tanggalSekarang = new Date();
+
+            var tahunSekarang = tanggalSekarang.getFullYear();
+            //Bulan dimulai dari 0 (Januari) hingga 11 (Desember)
+            var bulanSekarang = tanggalSekarang.getMonth() + 1;
+            var tanggalSekarang = tanggalSekarang.getDate();
+
+            var umur = tahunSekarang - tahunLahir;
+
+            if (bulanSekarang < bulanLahir || (bulanSekarang === bulanLahir && tanggalSekarang < tanggalLahir)) {
+                umur--;
+            }
+
+            return umur;
+        }
+
+        $(document).ready(function() {
+            $('#tanggal_lahir').on('change', function() {
+                var selectedDate = $(this).val();
+                console.log(selectedDate)
+                var usia = hitungUmur(selectedDate)
+                console.log(usia)
+                $("#umur").val(usia);
+                $("#val_umur").val(usia);
+            });
+        });
+    </script>
 
 </body>
 

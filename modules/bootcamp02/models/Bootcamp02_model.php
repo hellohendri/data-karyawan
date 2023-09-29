@@ -66,7 +66,7 @@ class Bootcamp02_model extends CI_Model
         $this->db->from('karyawan a');
         $this->db->join('user b', 'a.created_by=b.id');
         $this->db->where('a.created_by', $userid);
-
+        $this->db->order_by('a.created_time desc');
         $this->db->select('SQL_CALC_FOUND_ROWS ' . str_replace(' , ', ' ', implode(', ', $select)), false);
 
         $rResult = $this->db->get();
@@ -106,5 +106,16 @@ class Bootcamp02_model extends CI_Model
     public function save($data)
     {
         return $this->db->insert('karyawan', $data);
+    }
+
+    function findOne($nik)
+    {
+        $this->db->from('karyawan');
+        $this->db->where(['nik' => $nik]);
+        if (($row = $this->db->get()->row())) {
+            return $row;
+        }
+
+        return redirect('site/error');
     }
 }

@@ -7,16 +7,24 @@ class Bootcamp06 extends CI_Controller {
 	{
 		parent::__construct($securePage=false);
 		$this->load->model('Bootcamp06_model');
-		
-		
 	}
 
 	public function index()
 	{
+		$data['user'] = $this->Bootcamp06_model->tampil_data()->result();
 		$data['user']=$this->input->get_post('id');
 
 		$this->load->view('Bootcamp06_view',$data);
 		
+	}
+
+	function tambah() {
+		$this->load->view('Bootcamp06_view');
+	}
+
+	function tambah_aksi(){
+		$this->Bootcamp06_model->input_data();
+		redirect('Bootcamp06/?id=elva');
 	}
 
 	public function getListData(){
