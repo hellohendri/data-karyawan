@@ -1,18 +1,29 @@
-if (!USER_ID) {
-    $('#toggleModalAdd').prop('disabled', true)
-    $('#editKaryawan').prop('disabled', true)
-    $('#delKaryawan').prop('disabled', true)
-}
-
 $('#addKaryawan').click(function () {
 
     $.ajax({
         type: 'POST',
         url: SITE_URL + "/bootcamp03/addKaryawan/?id=" + USER_ID,
-        data: $('form').serialize(),
+        data: $('#addForm').serialize(),
         success: function (response) {
             if (response.success) {
-                alert(response.message);
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: response.message
+                })
+
                 grid_selector.trigger('reloadGrid');
                 $('#addKaryawanModal').modal('hide');
             } else {
@@ -49,7 +60,7 @@ $('#editKaryawan').click(function () {
                     $('input#telp').val(value.telp);
                     $('input#jabatan').val(value.jabatan);
                 });
-                
+
             },
             error: function () {
                 alert("akses controller gagal");
@@ -62,7 +73,12 @@ $('#editKaryawan').click(function () {
         });
 
     } else {
-        alert('No rows are selected');
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No rows are selected!'
+        })
     }
 
 });
@@ -76,7 +92,24 @@ $("#saveKaryawan").click(function () {
         data: $("#formEdit").serialize(),
         success: function (response) {
             var val = JSON.parse(response);
-            alert(val.message);
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: val.message
+            })
+
             grid_selector.trigger('reloadGrid');
             $('#editKaryawanModal').modal('hide');
         },
@@ -105,7 +138,6 @@ $("#delKaryawan").click(function (e) {
                     $(this).dialog("close");
                 },
                 "Delete karyawan": function () {
-                    // window.location = "delKaryawan/" + celValue;
 
                     $.ajax({
                         type: 'POST',
@@ -113,7 +145,24 @@ $("#delKaryawan").click(function (e) {
                         data: celValue,
                         success: function (response) {
                             var val = JSON.parse(response);
-                            alert(val.message);
+
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+                
+                            Toast.fire({
+                                icon: 'success',
+                                title: val.message
+                            })
+
                             grid_selector.trigger('reloadGrid');
                         },
                         error: function () {
@@ -127,7 +176,34 @@ $("#delKaryawan").click(function (e) {
         });
     }
     else {
-        alert("No rows are selected");
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No rows are selected!'
+        })
+
     }
 
 });
+
+if (!USER_ID) {
+
+    $('#excelExport,#toggleModalAdd,#editKaryawan,#delKaryawan').click(function (e) {
+        e.preventDefault();
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Harap login terlebih dahulu'
+        });
+    });
+
+} else {
+
+    $('#toggleModalAdd').attr({
+        'data-toggle': "modal",
+        'data-target': "#addKaryawanModal"
+    });
+
+}

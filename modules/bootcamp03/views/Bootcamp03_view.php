@@ -21,10 +21,10 @@
 
         <div class="button-wrapper">
             <div class="export-wrapper">
-                <a href="<?php echo base_url('index.php/bootcamp03/exportToExcel'); ?>" class="btn btn-success">Export to Excel</a>
+                <a href="<?php echo base_url('index.php/bootcamp03/exportToExcel'); ?>" class="btn btn-success" id="excelExport">Export to Excel</a>
             </div>
             <div class="crud-wrapper">
-                <button type="button" class="btn btn-primary" id="toggleModalAdd" data-toggle="modal" data-target="#addKaryawanModal">Add</button>
+                <button type="button" class="btn btn-primary" id="toggleModalAdd">Add</button>
                 <button type="button" class="btn btn-warning" id="editKaryawan">Edit</button>
                 <input type="button" class="btn btn-danger" id="delKaryawan" value="Delete" />
             </div>
@@ -186,6 +186,7 @@
     <script src="<?= base_url(); ?>modules/bootcamp03/js/jqGrid/i18n/grid.locale-en.js"></script>
     <script src="<?php echo base_url(); ?>modules/bootcamp03/js/Bootcamp03.js?v=<?= rand(0, 20); ?>"></script>
     <script src="<?= base_url() ?>modules/bootcamp03/js/Ajaxform.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

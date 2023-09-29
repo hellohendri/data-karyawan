@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-// require_once FCPATH . 'vendor/autoload.php';
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -101,58 +99,53 @@ class Bootcamp03 extends CI_Controller
 
 	public function exportToExcel()
 	{
-		if ($this->session->has_userdata('user_session')) {
-			$data['karyawan'] = $this->db->get_where('karyawan', array('created_by' => $this->session->userdata('user_session')))->result();
 
-			// Create a new Spreadsheet
-			$spreadsheet = new Spreadsheet();
-			$sheet = $spreadsheet->getActiveSheet();
+		$data['karyawan'] = $this->db->get_where('karyawan', array('created_by' => $this->session->userdata('user_session')))->result();
 
-			// Set column headers
-			$sheet->setCellValue('A1', 'NIK');
-			$sheet->setCellValue('B1', 'Nama');
-			$sheet->setCellValue('C1', 'Tempat Lahir');
-			$sheet->setCellValue('D1', 'Tanggal Lahir');
-			$sheet->setCellValue('E1', 'Umur');
-			$sheet->setCellValue('F1', 'Alamat');
-			$sheet->setCellValue('G1', 'Telp');
-			$sheet->setCellValue('H1', 'Jabatan');
-			$sheet->setCellValue('I1', 'Created By');
-			$sheet->setCellValue('J1', 'Created Time');
-			// Add more columns as needed
+		// Create a new Spreadsheet
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
 
-			// Populate data from the database
-			$row = 2;
-			foreach ($data['karyawan'] as $k) {
-				$sheet->setCellValue('A' . $row, $k->nik);
-				$sheet->setCellValue('B' . $row, $k->nama);
-				$sheet->setCellValue('C' . $row, $k->tempat_lahir);
-				$sheet->setCellValue('D' . $row, $k->tanggal_lahir);
-				$sheet->setCellValue('E' . $row, $k->umur);
-				$sheet->setCellValue('F' . $row, $k->alamat);
-				$sheet->setCellValue('G' . $row, $k->telp);
-				$sheet->setCellValue('H' . $row, $k->jabatan);
-				$sheet->setCellValue('I' . $row, $k->created_by);
-				$sheet->setCellValue('J' . $row, $k->created_time);
-				$row++;
-			}
+		// Set column headers
+		$sheet->setCellValue('A1', 'NIK');
+		$sheet->setCellValue('B1', 'Nama');
+		$sheet->setCellValue('C1', 'Tempat Lahir');
+		$sheet->setCellValue('D1', 'Tanggal Lahir');
+		$sheet->setCellValue('E1', 'Umur');
+		$sheet->setCellValue('F1', 'Alamat');
+		$sheet->setCellValue('G1', 'Telp');
+		$sheet->setCellValue('H1', 'Jabatan');
+		$sheet->setCellValue('I1', 'Created By');
+		$sheet->setCellValue('J1', 'Created Time');
+		// Add more columns as needed
 
-			// Create a writer
-			$writer = new Xlsx($spreadsheet);
-
-			// Set the file name and headers for the download
-			$filename = 'data_karyawan.xlsx';
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			header('Content-Disposition: attachment;filename="' . $filename . '"');
-			header('Cache-Control: max-age=0');
-
-			// Save the spreadsheet to output
-			$writer->save('php://output');
-		} else {
-			echo '<script type="text/javascript">
-                    alert("Silahkan login terlebih dahulu");
-					window.location.href="'.  base_url() . 'index.php/bootcamp03' . '";
-                </script>';
+		// Populate data from the database
+		$row = 2;
+		foreach ($data['karyawan'] as $k) {
+			$sheet->setCellValue('A' . $row, $k->nik);
+			$sheet->setCellValue('B' . $row, $k->nama);
+			$sheet->setCellValue('C' . $row, $k->tempat_lahir);
+			$sheet->setCellValue('D' . $row, $k->tanggal_lahir);
+			$sheet->setCellValue('E' . $row, $k->umur);
+			$sheet->setCellValue('F' . $row, $k->alamat);
+			$sheet->setCellValue('G' . $row, $k->telp);
+			$sheet->setCellValue('H' . $row, $k->jabatan);
+			$sheet->setCellValue('I' . $row, $k->created_by);
+			$sheet->setCellValue('J' . $row, $k->created_time);
+			$row++;
 		}
+
+		// Create a writer
+		$writer = new Xlsx($spreadsheet);
+
+		// Set the file name and headers for the download
+		$filename = 'data_karyawan.xlsx';
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="' . $filename . '"');
+		header('Cache-Control: max-age=0');
+
+		// Save the spreadsheet to output
+		$writer->save('php://output');
+
 	}
 }
