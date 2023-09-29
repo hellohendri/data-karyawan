@@ -27,12 +27,20 @@ $('#addKaryawan').click(function () {
                 grid_selector.trigger('reloadGrid');
                 $('#addKaryawanModal').modal('hide');
             } else {
-                alert(response.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: response.message
+                });
                 $('#errorGroup').append(response.errors);
             }
         },
         error: function () {
-            alert("akses controller gagal");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Akses Controller Gagal'
+            });
         }
     });
 
@@ -63,7 +71,11 @@ $('#editKaryawan').click(function () {
 
             },
             error: function () {
-                alert("akses controller gagal");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Akses Controller Gagal'
+                });
             }
         });
 
@@ -84,37 +96,48 @@ $('#editKaryawan').click(function () {
 });
 
 $("#saveKaryawan").click(function () {
-    console.log("Save karyawan telah di click");
 
     $.ajax({
         type: 'POST',
         url: SITE_URL + "/bootcamp03/saveKaryawan",
-        data: $("#formEdit").serialize(),
+        data: $('#formEdit').serialize(),
         success: function (response) {
-            var val = JSON.parse(response);
+            if (response.success) {
 
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
 
-            Toast.fire({
-                icon: 'success',
-                title: val.message
-            })
+                Toast.fire({
+                    icon: 'success',
+                    title: response.message
+                })
 
-            grid_selector.trigger('reloadGrid');
-            $('#editKaryawanModal').modal('hide');
+                grid_selector.trigger('reloadGrid');
+                $('#editKaryawanModal').modal('hide');
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: response.message
+                });
+                $('div#errorGroup').append(response.errors);
+            }
         },
         error: function () {
-            alert("akses controller gagal");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Alses controller gagal'
+            });
         }
     });
 
@@ -166,7 +189,11 @@ $("#delKaryawan").click(function (e) {
                             grid_selector.trigger('reloadGrid');
                         },
                         error: function () {
-                            alert("akses controller gagal");
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Akses Controller Gagal'
+                            });
                         }
                     });
 

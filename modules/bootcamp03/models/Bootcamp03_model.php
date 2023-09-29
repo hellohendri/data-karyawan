@@ -136,14 +136,6 @@ class Bootcamp03_model extends CI_Model
 
         $this->db->where('nik', $nik);
         $this->db->update('karyawan', $data);
-
-        if ( $this->db->affected_rows() > 0) {
-            $data = array('status' => 'success', 'message' => 'Data karyawan berhasil di edit', 'user' => $this->session->userdata('user_session'),'data' => $this->db->affected_rows());
-        } else {
-            $data = array('status' => 'error', 'message' => 'Edit Data Karyawan Gagal');
-        }
-
-        return json_encode($data);
     }
 
     public function delKaryawan($where)

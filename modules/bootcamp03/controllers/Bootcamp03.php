@@ -63,11 +63,6 @@ class Bootcamp03 extends CI_Controller
 					);
 				}
 			}
-		} else {
-			$response = array(
-				'success' => false,
-				'message' => 'Silahkan login terlebih dahulu'
-			);
 		}
 
 		// Send a JSON response
@@ -87,8 +82,34 @@ class Bootcamp03 extends CI_Controller
 
 	public function saveKaryawan()
 	{
+		if ($this->session->has_userdata('user_session')) {
 
-		echo $this->Bootcamp03_model->saveKaryawan();
+			// form validation
+			$rules = $this->Bootcamp03_model->rules();
+			$this->form_validation->set_rules($rules);
+
+			// changing delimiters globally for adding styles
+			$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+			if ($this->form_validation->run() == FALSE) {
+				$errors = validation_errors();
+				$response = array(
+					'success' => false,
+					'errors' => $errors,
+					'message' => 'Validasi form gagal'
+				);
+			} else {
+				echo $this->Bootcamp03_model->saveKaryawan();
+				$response = array(
+					'success' => true,
+					'message' => 'Data karyawan berhasil diubah'
+				);
+			}
+		}
+
+		// Send a JSON response
+		header('Content-Type: application/json');
+		echo json_encode($response);
 	}
 
 	public function delKaryawan($nik)
@@ -146,6 +167,5 @@ class Bootcamp03 extends CI_Controller
 
 		// Save the spreadsheet to output
 		$writer->save('php://output');
-
 	}
 }
