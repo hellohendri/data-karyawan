@@ -1,6 +1,37 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Bootcamp06_model extends CI_Model 
 {
+    function tampil_data(){
+		return $this->db->get('user');
+	}
+
+	function input_data() {
+        $nik = $this->input->post('nik');
+		$nama = $this->input->post('nama');
+		$tempat_lahir = $this->input->post('tempat_lahir');
+		$tanggal_lahir = $this->input->post('tanggal_lahir');
+		$umur = $this->input->post('umur');
+		$alamat = $this->input->post('alamat');
+		$telp = $this->input->post('telp');
+		$jabatan = $this->input->post('jabatan');
+		$created_by = $this->input->post('created_by');
+		$created_time = date("Y-m-d h:i:s");
+ 
+		$data = array(
+			'nik' => $nik,
+			'nama' => $nama,
+			'tempat_lahir' => $tempat_lahir,
+			'tanggal_lahir' => $tanggal_lahir,
+			'umur' => $umur,
+			'alamat' => $alamat,
+			'telp' => $telp,
+			'jabatan' => $jabatan,
+			'created_by' => $created_by,
+			'created_time' => $created_time
+			);
+
+		$this->db->insert('karyawan',$data);
+	}
 
     function getListData(){
 		

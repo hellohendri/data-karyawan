@@ -52,11 +52,12 @@ echo "username : ".$user;
 
 <div class="container">
 	<center>
-        <button type="button" class="text-center btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Data</button>
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Data</button>
     </center>
 	<br>
 
     <div id="myModal" class="modal fade" role="dialog">
+	<form action="<?php echo site_url(). '/bootcamp06/tambah_aksi'; ?>" method="post">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -64,36 +65,38 @@ echo "username : ".$user;
                     <h4 class="modal-title">Add data</h4>
                 </div>
                 <div class="modal-body">
-                    <label for="nik">NIK</label>
-					<input type="text" class="form-control" placeholder="Masukkan NIK" id="nik"><br>
-					<label for="nama">Nama</label>
-					<input type="text" class="form-control" placeholder="Masukkan nama" id="nama"><br>
-					<label for="tempatlahir">Tempat Lahir</label>
-					<input type="text" class="form-control" placeholder="Masukkan tempat lahir" id="tempatlahir"><br>
-					<label for="tanggallahir">Tanggal Lahir</label>
-					<input type="date" class="form-control" placeholder="Masukkan tanggal lahir" id="tanggallahir"><br>
-					<label for="umur">Umur</label>
-					<input type="number" class="form-control" placeholder="Masukkan umur" id="umur"><br>
-					<label for="alamat">Alamat</label>
-					<input type="text" class="form-control" placeholder="Masukkan alamat" id="alamat"><br>
-					<label for="telp">No Telepon</label>
-					<input type="text" class="form-control" placeholder="Masukkan nomor telepon" id="telp"><br>
-					<label for="jabatan">Jabatan</label>
-					<select class="form-control" id="jabatan">
-						<option selected>Pilih jabatan</option>
-						<option value="1">Supervisor</option>
-						<option value="2">Manager</option>
-						<option value="3">Staff</option>
-					</select>
+                    <label><b>NIK</b></label><br>
+                    <input type="text" class="form-control" placeholder="Masukkan NIK" name="nik" required><br>
+                    <label><b>Nama</b></label><br>
+                    <input type="text" class="form-control" placeholder="Masukkan nama" name="nama" required><br>
+                    <label><b>Tempat Lahir</b></label><br>
+                    <input type="text" class="form-control" placeholder="Masukkan tempat lahir" name="tempat_lahir" required><br>
+                    <label><b>Tanggal Lahir</b></label><br>
+                    <input type="date" class="form-control" placeholder="Masukkan tanggal lahir" name="tanggal_lahir" required><br>
+					<label><b>Umur</b></label><br>
+                    <input type="text" class="form-control" placeholder="Masukkan umur" name="umur" required><br>
+                    <label><b>Alamat</b></label><br>
+                    <input type="text" class="form-control" placeholder="Masukkan alamat" name="alamat" required><br>
+                    <label><b>Telp</b></label><br>
+                    <input type="text" class="form-control" placeholder="Masukkan nomor telepon" name="telp" class="form-control" required><br>
+					<label><b>Jabatan</b></label><br>
+                    <select id="jabatan" name="jabatan" class="form-control" placeholder="Pilih Jabatan" required>
+                        <option value="Option 1">Manager</option>
+                        <option value="Option 2">Staff</option>
+                        <option value="Option 3">Supervisor</option>
+                    </select> <br>
+					<label><b>Created By</b></label><br>
+                    <input type="text" class="form-control" placeholder="Masukkan nama karyawan" name="created_by" class="form-control" required><br>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>    
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                   <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
-    </div>
-   </div>        
+	</form>
+	</div>
+</div>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
