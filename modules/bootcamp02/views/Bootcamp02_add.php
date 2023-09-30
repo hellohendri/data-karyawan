@@ -13,8 +13,7 @@
 <body>
     <div class="container register">
         <div class="row">
-            <div class="col-md-3 register-left">
-                <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+            <div class="col-md-3 register-left" style="margin-top: 150px;">
                 <h3>FORM</h3>
                 <h3>DATA KARYAWAN</h3>
                 <p>Halaman Untuk Pengelolaan Data Karyawan Ecentrix</p>
@@ -23,7 +22,7 @@
             <div class="col-md-9 register-right">
                 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">ECENTRIX</a>
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="" role="tab" aria-controls="home" aria-selected="true">ECENTRIX</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -86,6 +85,7 @@
 
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script type='text/javascript'>
         function hitungUmur(tanggalLahir) {
             var tanggalLahirArray = tanggalLahir.split('-');

@@ -40,18 +40,18 @@ class Bootcamp02 extends CI_Controller
 
 	public function submitadd()
 	{
-		$this->form_validation->set_rules('nik', 'NIK', 'trim|required|numeric|exact_length[16]');
-		$this->form_validation->set_rules('nama', 'Nama', 'trim|required');
-		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'trim|required');
-		$this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'trim|required');
-		$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
-		$this->form_validation->set_rules('telp', 'Telepon', 'trim|required');
+		$this->form_validation->set_rules('nik', 'NIK', 'trim|required|numeric|exact_length[16]|regex_match[/^[0-9]+$/]');
+		$this->form_validation->set_rules('nama', 'Nama', 'trim|required|regex_match[/^[A-Za-z\s]+$/]|max_length[60]');
+		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'trim|required|min_length[3]|max_length[50]');
+		$this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'trim|required|callback_check_valid_birthdate');
+		$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required|min_length[5]|max_length[255]|regex_match[/^[A-Za-z0-9\s\.,#-]+$/]');
+		$this->form_validation->set_rules('telp', 'Telepon', 'trim|required|numeric|min_length[10]|max_length[13]|regex_match[/^[0-9]+$/]');
 
 		if ($this->form_validation->run() == FALSE) {
 			// Kondisi Jika Validasi Gagal
 			$user = $this->input->get_post('id');
 			$data['user'] = $user;
-			$this->load->view('Bootcamp02_add'); 
+			$this->load->view('Bootcamp02_add');
 		} else {
 			// Kondisi Jika Validasi Berhasil
 			$data = array(
@@ -77,5 +77,22 @@ class Bootcamp02 extends CI_Controller
 		$tanggal_sekarang = new DateTime();
 		$diff = $tanggal_sekarang->diff($birthdate);
 		return $diff->y;
+	}
+
+	public function check_valid_birthdate($str)
+	{
+		// Konversi input tanggal lahir ke objek DateTime
+		$input_date = new DateTime($str);
+
+		// Dapatkan tanggal sekarang
+		$current_date = new DateTime();
+
+		// Bandingkan tanggal lahir dengan tanggal sekarang
+		if ($input_date > $current_date) {
+			$this->form_validation->set_message('check_valid_birthdate', 'The %s field cannot be a future date.');
+			return FALSE;
+		}
+
+		return TRUE;
 	}
 }
