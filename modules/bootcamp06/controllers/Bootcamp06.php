@@ -12,18 +12,19 @@ class Bootcamp06 extends CI_Controller {
 	public function index()
 	{
 		$data['user'] = $this->Bootcamp06_model->tampil_data()->result();
-		$data['user']=$this->input->get_post('id');
+		$data['user'] = $this->input->get_post('id');
 
 		$this->load->view('Bootcamp06_view',$data);
-		
 	}
 
-	function tambah() {
-		$this->load->view('Bootcamp06_view');
-	}
-
-	function tambah_aksi(){
+	function tambah_data(){
 		$this->Bootcamp06_model->input_data();
+		redirect('Bootcamp06/?id=elva');
+	}
+
+	function hapus_data($id){
+		$where = array('id' => $id);
+		$this->Bootcamp06_model->delete_data($where,'user');
 		redirect('Bootcamp06/?id=elva');
 	}
 

@@ -33,6 +33,11 @@ class Bootcamp06_model extends CI_Model
 		$this->db->insert('karyawan',$data);
 	}
 
+	function delete_data(){
+		$this->db->where($where);
+		$this->db->delete($table);
+	}
+
     function getListData(){
 		
 		$iDisplayStart = $this->input->get_post('page', true);

@@ -57,7 +57,7 @@ echo "username : ".$user;
 	<br>
 
     <div id="myModal" class="modal fade" role="dialog">
-	<form action="<?php echo site_url(). '/bootcamp06/tambah_aksi'; ?>" method="post">
+	<form action="<?php echo site_url(). '/bootcamp06/tambah_data'; ?>" method="post">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -89,8 +89,8 @@ echo "username : ".$user;
                     <input type="text" class="form-control" placeholder="Masukkan nama karyawan" name="created_by" class="form-control" required><br>
                 </div>
                 <div class="modal-footer">
-                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                   <button type="submit" class="btn btn-primary">Save changes</button>
+                   <button type="submit" class="btn btn-primary">Save</button>
+				   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
