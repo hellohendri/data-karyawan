@@ -34,7 +34,17 @@ grid_selector.jqGrid({
 		{ name: 'jabatan', width: 150, sortable: false, editable: true, editrules: { required: false } },
 		{ name: 'created_by', width: 150, sorttype: false, editable: false },
 		{ name: 'created_time', width: 150, sorttype: false, editable: false },
-		{ name: 'actions', width: 150, sorttype: false, editable: false },
+		{
+			name: 'actions',
+			width: 100,
+			sortable: false,
+			formatter: function (cellValue, options, rowObject) {
+				var editButton = '<a href="#" class="edit-button" data-id="' + rowObject.id + '">Edit</a>';
+				var deleteButton = '<a href="#" class="delete-button" data-id="' + rowObject.id + '">Delete</a>';
+
+				return editButton + ' | ' + deleteButton;
+			}
+		}
 	],
 
 	shrinkToFit: false,

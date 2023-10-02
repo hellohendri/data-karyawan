@@ -65,9 +65,9 @@
                                     <div class="form-group">
                                         <select class="form-control" id="jabatan" name="jabatan" value="<?= $this->form_validation->set_value('jabatan') ?>">
                                             <option selected disabled hidden>Pilih Jabatan</option>
-                                            <option value="manager" <?php echo set_select('jabatan', 'manager'); ?>>Manager</option>
-                                            <option value="staff" <?php echo set_select('jabatan', 'staff'); ?>>Staff</option>
-                                            <option value="supervisor" <?php echo set_select('jabatan', 'supervisor'); ?>>Supervisor</option>
+                                            <option value="manager" <?php echo set_select('jabatan', 'manager', isset($karyawan) ? $karyawan->jabatan == 'manager' : false); ?>>Manager</option>
+                                            <option value="staff" <?php echo set_select('jabatan', 'staff', isset($karyawan) ? $karyawan->jabatan == 'staff' : false); ?>>Staff</option>
+                                            <option value="supervisor" <?php echo set_select('jabatan', 'supervisor', isset($karyawan) ? $karyawan->jabatan == 'supervisor' : false); ?>>Supervisor</option>
                                         </select>
                                         <?php echo form_error('jabatan'); ?>
                                     </div>

@@ -30,14 +30,6 @@ class Bootcamp02 extends CI_Controller
 		$this->load->view('Bootcamp02_add');
 	}
 
-	public function update($nik)
-	{
-		$karyawan = $this->Bootcamp02_model->findOne($nik);
-		$user = $this->input->get_post('id');
-		$data['user'] = $user;
-		$this->load->view('Bootcamp02_add', ['karyawan' => $karyawan]);
-	}
-
 	public function submitadd()
 	{
 		$this->form_validation->set_rules('nik', 'NIK', 'trim|required|numeric|exact_length[16]|regex_match[/^[0-9]+$/]');
@@ -69,6 +61,20 @@ class Bootcamp02 extends CI_Controller
 			$this->Bootcamp02_model->save($data);
 			redirect('bootcamp02?id=' . $this->input->get('id'));
 		}
+	}
+
+	public function update($nik)
+	{
+		$karyawan = $this->Bootcamp02_model->findOne($nik);
+		$user = $this->input->get_post('id');
+		$data['user'] = $user;
+		$this->load->view('Bootcamp02_add', ['karyawan' => $karyawan]);
+	}
+
+	public function delete($nik)
+	{
+		$this->Bootcamp02_model->delete($nik);
+		redirect('bootcamp02?id=' . $this->input->get('id'));
 	}
 
 	function countAge($birthdate)

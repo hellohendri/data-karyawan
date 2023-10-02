@@ -108,6 +108,17 @@ class Bootcamp02_model extends CI_Model
         return $this->db->insert('karyawan', $data);
     }
 
+    public function update($nik, $data)
+    {
+        return $this->db->where('nik', $nik)->update('karyawan', $data);
+    }
+
+    function delete($nik)
+    {
+        $this->db->delete('karyawan', array('nik' => $nik));
+        return $this->db->affected_rows() > 0;
+    }
+
     function findOne($nik)
     {
         $this->db->from('karyawan');
