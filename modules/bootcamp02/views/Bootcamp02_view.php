@@ -40,6 +40,7 @@
     <div id="userKaryawanPager"></div>
     <script type="text/javascript">
         var USER_ID = '<?= $user ?>';
+        var BASE_URL = '<?= base_url('bootcamp02') ?>';
     </script>
 
     <script src='<?= base_url() ?>modules/bootcamp02/js/jquery-2.0.3.min.js'></script>

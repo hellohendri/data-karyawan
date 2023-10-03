@@ -30,7 +30,7 @@ class Bootcamp02 extends CI_Controller
 		$this->load->view('Bootcamp02_add');
 	}
 
-	public function submitadd()
+	public function submitadd($nik = null)
 	{
 		$this->form_validation->set_rules('nik', 'NIK', 'trim|required|numeric|exact_length[16]|regex_match[/^[0-9]+$/]');
 		$this->form_validation->set_rules('nama', 'Nama', 'trim|required|regex_match[/^[A-Za-z\s]+$/]|max_length[60]');
@@ -58,7 +58,13 @@ class Bootcamp02 extends CI_Controller
 				'created_by' => $this->input->get('id'),
 				'created_time' => date('Y-m-d H:i:s'),
 			);
-			$this->Bootcamp02_model->save($data);
+			if (!$nik) {
+				//create
+				$this->Bootcamp02_model->save($data);
+			} else {
+				//update
+				$this->Bootcamp02_model->update($nik, $data);
+			}
 			redirect('bootcamp02?id=' . $this->input->get('id'));
 		}
 	}
