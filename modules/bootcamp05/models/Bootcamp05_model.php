@@ -113,12 +113,19 @@ class Bootcamp05_model extends CI_Model
 		$nama = $this->input->post('nama');
 		$tempat_lahir = $this->input->post('tempat_lahir');
 		$tanggal_lahir = $this->input->post('tanggal_lahir');
-		$umur = $this->input->post('umur');
+		$umur = date_diff(date_create($tanggal_lahir), date_create('now'))->y;
 		$alamat = $this->input->post('alamat');
 		$telp = $this->input->post('telp');
 		$jabatan = $this->input->post('jabatan');
 		$created_by = $this->input->post('created_by');
 		$created_time = $this->input->post('created_time');
+		
+		// Fetch the ID of the user named 'bagas' from the 'user' table
+		$user = $this->db->select('id')
+                          ->from('user')
+                          ->where('id', 'bagas')
+                          ->get()
+                          ->row();
  
 		$data = array(
 			'nik' => $nik,
@@ -129,12 +136,54 @@ class Bootcamp05_model extends CI_Model
 			'alamat' => $alamat,
 			'telp' => $telp,
 			'jabatan' => $jabatan,
-			'created_by' => $created_by,
-			'created_time' => $created_time,
+			'created_by' => $user->id,
+			'created_time' => date('Y-m-d h:i:s')
 			);
 		
 		$this->db->insert('karyawan',$data);
 		return true;
 	}
 	
+	
+	public function isNikExists($nik) {
+    $query = $this->db->get_where('karyawan', array('nik' => $nik));
+    return $query->num_rows() > 0;
+}
+	
+	// In your model
+	function getJabatanOptions() {
+    // Define the allowed job positions
+    $allowed_jabatan = ['staff', 'manager', 'supervisor'];
+
+    // Fetch the options from the database table
+    $options = $this->db->distinct()
+                       ->select('jabatan')
+                       ->from('karyawan')
+                       ->get()
+                       ->result_array();
+
+    // Create an array to store the final options
+    $final_options = [];
+
+    // Loop through the allowed job positions
+    foreach ($allowed_jabatan as $jabatan) {
+        // Check if the current job position is present in the fetched options
+        $option_exists = false;
+        foreach ($options as $option) {
+            if ($option['jabatan'] === $jabatan) {
+                $option_exists = true;
+                break;
+            }
+        }
+
+        // If the job position exists in the fetched options or is allowed, add it to the final options array
+        if ($option_exists || in_array($jabatan, $allowed_jabatan)) {
+            $final_options[] = ['jabatan' => $jabatan];
+        }
+    }
+
+    // Return the final options
+    return $final_options;
+	
+}
 }

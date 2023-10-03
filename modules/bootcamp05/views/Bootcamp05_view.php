@@ -72,11 +72,14 @@ echo "username : ".$user;
     <span class="close">&times;</span>
     <h2>Tambah Data</h2>
       <form id="form-input" action="<?php echo site_url('Bootcamp05/AddData') ?>" method="post" enctype="multipart/form-data">
-       <div class="form-group"> 
+	   
+	   
+	   <div class="form-group"> 
 		<label for="nik">NIK:</label>
         <input type="text" id="nik" name="nik" class="form-control" placeholder="Masukkan NIK" required>
       </div>
       
+
       <div class="form-group">
         <label for="nama">Nama:</label>
         <input type="text" id="nama" name="nama" class="form-control" placeholder="Masukkan nama" required>
@@ -93,11 +96,6 @@ echo "username : ".$user;
       </div>
       
       <div class="form-group">
-        <label for="umur">Umur:</label>
-        <input type="number" id="umur" name="umur" class="form-control" placeholder="Masukkan Umur" required>
-      </div>
-      
-      <div class="form-group">
         <label for="alamat">Alamat:</label>
         <input type="text" id="alamat" name="alamat" class="form-control" placeholder="Masukkan Alamat" required>
       </div>
@@ -107,25 +105,14 @@ echo "username : ".$user;
         <input type="text" id="telp" name="telp" class="form-control" placeholder="Masukkan Nomor Telepon" required>
       </div>
       
-      <div class="form-group">
-        <label for="jabatan">Jabatan:</label>
-        <select id="jabatan" name="jabatan" class="form-control" placeholder="Pilih Jabatan" required>
-          <option value="Option 1">Manager</option>
-          <option value="Option 2">Staff</option>
-          <option value="Option 3">Supervisor</option>
-        </select>
-      </div>
-	  
-	  <div class="form-group">
-	  <label for="created_by">User</label>
-		<input type="text" id="created_by" name="created_by" class="form-control" placeholder="Input Nama User" required>
+		<div class="form-group">
+		<label for="jabatan">Jabatan:</label>
+		<select id="jabatan" name="jabatan" class="form-control" placeholder="Pilih Jabatan" required>
+        <?php foreach ($jabatan_options as $option): ?>
+            <option value="<?php echo $option['jabatan']; ?>"><?php echo $option['jabatan']; ?></option>
+        <?php endforeach; ?>
+		</select>
 	</div>
-
-      
-      <div class="form-group">
-        <label for="created_time">Created Time:</label>
-        <input type="datetime-local" id="created_time" name="created_time" class="form-control" required>
-      </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -156,19 +143,6 @@ span.onclick = function() {
       }
     }
 </script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    var createdTimeInput = document.getElementById("created_time");
-
-    var currentDateTime = new Date().toLocaleString("en-US", {
-      timeZone: "Asia/Jakarta",
-    });
-	
-    var formattedDateTime = currentDateTime.slice(0, 16).replace(/,/, "T");
-    createdTimeInput.value = formattedDateTime;
-  });
-</script>
-
 
 <table id="userKaryawan"></table>
 <div id="userKaryawanPager"></div>
@@ -199,7 +173,6 @@ span.onclick = function() {
       });
     });
   </script>
-		
 		
 </body>
 </body>
