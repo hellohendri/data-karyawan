@@ -32,19 +32,16 @@ grid_selector.jqGrid({
 		{ name: 'alamat', width: 200, sortable: false, editable: true, editrules: { required: false } },
 		{ name: 'telp', width: 150, sortable: false, editable: true, editrules: { required: false } },
 		{ name: 'jabatan', width: 150, sortable: false, editable: true, editrules: { required: false } },
-		{ name: 'created_by', width: 150, sorttype: false, editable: false },
+		{ name: 'full_name', width: 150, sorttype: false, editable: false },
 		{ name: 'created_time', width: 150, sorttype: false, editable: false },
 		{
-			name: 'actions',
-			width: 100,
-			sortable: false,
+			name: 'actions', width: 200, align: 'center',
 			formatter: function (cellValue, options, rowObject) {
-				var editButton = '<a href="#" class="edit-button" data-id="' + rowObject.id + '">Edit</a>';
-				var deleteButton = '<a href="#" class="delete-button" data-id="' + rowObject.id + '">Delete</a>';
-
-				return editButton + ' | ' + deleteButton;
+				var btn = '<a class="btn" href="' + BASE_URL + '/update/' + rowObject.nik + '?id=' + USER_ID + '"> Edit</a > ';
+				btn += '<a class="btn" href="' + BASE_URL + '/delete/' + rowObject.nik + '?id=' + USER_ID + '"> Hapus</a > ';
+				return btn;
 			}
-		}
+		},
 	],
 
 	shrinkToFit: false,

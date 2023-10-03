@@ -38,8 +38,11 @@
 
     <table id="userKaryawan"></table>
     <div id="userKaryawanPager"></div>
+
+    <!-- Penambahan BASE URL Untuk URL Form -->
     <script type="text/javascript">
         var USER_ID = '<?= $user ?>';
+        var BASE_URL = '<?= base_url('bootcamp02') ?>';
     </script>
 
     <script src='<?= base_url() ?>modules/bootcamp02/js/jquery-2.0.3.min.js'></script>

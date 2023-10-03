@@ -103,22 +103,26 @@ class Bootcamp02_model extends CI_Model
         echo json_encode($output);
     }
 
+    // Function Save Data
     public function save($data)
     {
         return $this->db->insert('karyawan', $data);
     }
 
+    // Function Update
     public function update($nik, $data)
     {
         return $this->db->where('nik', $nik)->update('karyawan', $data);
     }
 
+    // Function Delete
     function delete($nik)
     {
         $this->db->delete('karyawan', array('nik' => $nik));
         return $this->db->affected_rows() > 0;
     }
 
+    // Function Untuk Menemukan Karyawan Berdasar NIK 
     function findOne($nik)
     {
         $this->db->from('karyawan');
