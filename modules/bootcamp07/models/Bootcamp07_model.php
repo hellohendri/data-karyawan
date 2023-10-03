@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Bootcamp07_model extends CI_Model 
+class bootcamp07_model extends CI_Model 
 {
 
     function getListData(){
@@ -103,18 +103,24 @@ class Bootcamp07_model extends CI_Model
 		
         echo json_encode($output); 
 	}
-	
-	function save() {		
+		
+	function save() {
 		$nik = $this->input->post('nik');
 		$nama = $this->input->post('nama');
 		$tempat_lahir = $this->input->post('tempat_lahir');
 		$tanggal_lahir = $this->input->post('tanggal_lahir');
-		$umur = $this->input->post('umur');
+		$umur = date_diff(date_create($tanggal_lahir), date_create('now'))->y;
 		$alamat = $this->input->post('alamat');
 		$telp = $this->input->post('telp');
-		$jabatan = $this->input->post('nama');
+		$jabatan = $this->input->post('jabatan');
 		$created_by = $this->input->post('created_by');
 		$created_time = $this->input->post('created_time');
+		
+		$user = $this->db->select('id')
+                          ->from('user')
+                          ->where('id', 'anggi')
+                          ->get()
+                          ->row();
  
 		$data = array(
 			'nik' => $nik,
@@ -125,25 +131,43 @@ class Bootcamp07_model extends CI_Model
 			'alamat' => $alamat,
 			'telp' => $telp,
 			'jabatan' => $jabatan,
-			'created_by' => $created_by,
-			'created_time' => $created_time,
-		);
+			'created_by' => $user->id,
+			'created_time' => date('Y-m-d h:i:s')
+			);
 		
-		$this->db->select('*');
-		$this->db->from('karyawan');
-		$this->db->where('nik',$this->input->post('nik'));
-		$result=$this->db->get();
-			
-		if($result->num_rows()>0){
-			$val=array();
-			foreach($result->result_array() as $row){
-					$val[]=$row;
-			}
-				$data=array('status'=>'success','message'=>'Data Sudah Tersedia','data'=>$val);
-		}else{
-			$this->db->insert('karyawan',$data);
-			return true;
-		}
+		$this->db->insert('karyawan',$data);
+		return true;
+	}
+	
+	
+	public function isNikExists($nik) {
+    $query = $this->db->get_where('karyawan', array('nik' => $nik));
+    return $query->num_rows() > 0;
+}
+	
+	// In your model
+	function getJabatanOptions() {
+    // Define the allowed job positions
+    $allowed_jabatan = ['staff', 'manager', 'supervisor'];
+    $options = $this->db->distinct()
+                       ->select('jabatan')
+                       ->from('karyawan')
+                       ->get()
+                       ->result_array();
+    $final_options = [];
+    foreach ($allowed_jabatan as $jabatan) {
+        $option_exists = false;
+        foreach ($options as $option) {
+            if ($option['jabatan'] === $jabatan) {
+                $option_exists = true;
+                break;
+            }
+        }
+        if ($option_exists || in_array($jabatan, $allowed_jabatan)) {
+            $final_options[] = ['jabatan' => $jabatan];
+        }
+    }
+    return $final_options;
 	}
 
 	function edit($nik) {
@@ -169,10 +193,18 @@ class Bootcamp07_model extends CI_Model
 		$this->db->get_where('karyawan',$data);
 		return true;
 	}
+	
+	function editData($where,$table){		
+		return $this->db->get_where($table,$where);
+	}
+	
+	function updateData($where,$data,$table){
+		$this->db->where($where);
+		$this->db->update($table,$data);
+	}
 
-	function delete($nik) {
-		$this->db->where($nik);
-		$this->db->delete($table);
+	function deleteData($nik) {
+		$this->db->delete('karyawan', ['nik' => $nik]);
 	}
 	
 }	

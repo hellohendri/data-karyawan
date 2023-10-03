@@ -73,6 +73,9 @@ grid_selector.jqGrid({
 	autowidth: true
 
 });
+  
+
+
 
 jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 	{ 	//navbar options

@@ -7,12 +7,15 @@ class Bootcamp07 extends CI_Controller {
 	{
 		parent::__construct($securePage=false);
 		$this->load->model('bootcamp07_model');
-		
 	}
 
 	public function index()
 	{
 		$data['user']=$this->input->get_post('id');
+		$this->load->model('bootcamp07_model');
+		$jabatan_options = $this->bootcamp07_model->getJabatanOptions();
+		$data['jabatan_options'] = $jabatan_options;
+
 		$this->load->view('bootcamp07_view',$data);
 		
 	}
@@ -23,17 +26,52 @@ class Bootcamp07 extends CI_Controller {
 	}
 	
 	public function addData(){
-		$this->bootcamp07_model->save();
-		redirect('bootcamp07/?id=anggi');
-	}
+    $nik = $this->input->post('nik');
+
+    if ($this->bootcamp07_model->isNikExists($nik)) {
+        echo "<script>alert('NIK sudah digunakan. Harap masukkan NIK yang baru');</script>";
+		echo "<script>window.history.back();</script>";
+    } else {
+        $this->bootcamp07_model->save();
+        redirect('bootcamp07/?id=anggi');
+    }
 	
+	}
+		
 	public function deleteData($nik){
-		$this->bootcamp07_model->delete($nik);
-		redirect('bootcamp07/?id=anggi');
+		$nik = $this->input->post('nik');
+		// Menghapus data dari database
+		$this->load->model('Bootcamp07_model');
+		$this->Bootcamp07_model->deleteData($nik);
+		// Mengirim respons ke klien
+		$this->output->set_content_type('application/json');
+		$this->output->set_status_header(200);
+		$this->output->set_output(json_encode(['message' => 'Data berhasil dihapus']));
+	}
+		
+	function editData($nik){
+		$where = array('nik' => $nik);
+		$data['karyawan'] = $this->bootcamp07_model->editData($where,'karyawan')->result();
+		$this->load->view('bootcamp07_view_edit',$data);
 	}
 	
-	function edit($nik){
-		$this->bootcamp07_model->edit($nik);
-		redirect('bootcamp07/?id=anggi');
-	}
+	function update(){
+	$nik = $this->input->post('nik');
+	$nama = $this->input->post('nama');
+	$alamat = $this->input->post('alamat');
+	$telp = $this->input->post('telp');
+ 
+	$data = array(
+		'nama' => $nama,
+		'alamat' => $alamat,
+		'telp' => $telp
+	);
+ 
+	$where = array(
+		'nik' => $nik
+	);
+ 
+	$this->bootcamp07_model->updateData($where,$data,'karyawan');
+	 redirect('bootcamp07/?id=anggi');
+	 }
 }

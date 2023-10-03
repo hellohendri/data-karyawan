@@ -51,61 +51,46 @@ echo "username : ".$user;
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <form id="form-input" id="form-input">
+    <form id="form-input" action="<?php echo site_url('Bootcamp07/addData') ?>" method="post" enctype="multipart/form-data">
+	<div class="form-group"> 
+		<label for="nik">NIK:</label>
+        <input type="text" id="nik" name="nik" class="form-control" placeholder="Masukkan NIK" required>
+      </div>
+      
+
+      <div class="form-group">
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" name="nama" class="form-control" placeholder="Masukkan nama" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="tempat_lahir">Tempat Lahir:</label>
+        <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control" placeholder="Masukkan Tempat Lahir" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="tanggal_lahir">Tanggal Lahir:</label>
+        <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-control" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="alamat">Alamat:</label>
+        <input type="text" id="alamat" name="alamat" class="form-control" placeholder="Masukkan Alamat" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="telp">Telepon:</label>
+        <input type="text" id="telp" name="telp" class="form-control" placeholder="Masukkan Nomor Telepon" required>
+      </div>
 	<div class="form-group">
-	<label for="nik">NIK</label>
-    <input type="text" class="form-control" id="nik" name="nik" placeholder="Input NIK" required>
-    </div>
-	<div class="form-group">
-    <label for="nama">Nama</label>
-    <input type="text" class="form-control" id="nama" name="nama" placeholder="Input Nama" required>
-    </div>
-    <div class="form-group">
-    <label for="tempat_lahir">Tempat Lahir</label>
-    <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" placeholder="Input Tempat Lahir" required>
-    </div>
-	<div class="form-group">
-    <label for="tanggal_lahir">Tanggal Lahir</label>
-    <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" placeholder="Input Tanggal Lahir" required>
-    </div>
-	<div class="form-group">
-    <label for="umur">Umur</label>
-    <input type="text" class="form-control" id="umur" name="umur" placeholder="Input Umur" required>
-    </div>
-	<div class="form-group">
-    <label for="alamat">Alamat</label>
-    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Input Alamat" required>
-    </div>
-	<div class="form-group">
-    <label for="telp">Nomor Telepon</label>
-    <input type="text" class="form-control" id="telp" name="telp" placeholder="Input Nomor Telepon" required>
-    </div>
-	<div class="form-group">
-	<label for="jabatan">Jabatan</label>
-    <select  type="text" name="jabatan" class="form-control" id="jabatan" required>
-    <option type="text" value="staff">Staff</option>
-    <option type="text" value="supervisor">Supervisor</option>
-	<option type="text" value="manager">Manager</option>
-    </select>
-    </div>    
-	<div class="form-group">
-	<label for="created_by">Created By</label>
-    <input type="text" class="form-control" id="created_by" name="created_by" placeholder="Input Nama Karyawan" required>
-    </div>
-	<div class="form-group">
-    <label for="created_time">Created Time</label>
-    <input type="datetime-local" class="form-control" id="created_time" name="created_time" required>
-    </div>
-	<script>
-	document.addEventListener("DOMContentLoaded", function () {
-	var createdTimeInput = document.getElementById("created_time");
-	var currentDateTime = new Date().toISOString("en-US", {
-      timeZone: "Asia/Jakarta",
-    });
-    createdTimeInput.value = currentDateTime;
-	});
-	</script>
-  <input type="button" name="btncheck" id="btncheck" value="Submit" class="btn btn-primary">
+		<label for="jabatan">Jabatan:</label>
+		<select id="jabatan" name="jabatan" class="form-control" placeholder="Pilih Jabatan" required>
+        <?php foreach ($jabatan_options as $option): ?>
+            <option value="<?php echo $option['jabatan']; ?>"><?php echo $option['jabatan']; ?></option>
+        <?php endforeach; ?>
+		</select>
+	</div>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
 </div>
@@ -136,25 +121,36 @@ window.onclick = function(event) {
 <script src="<?=base_url()?>modules/bootcamp07/js/jquery-ui.js"></script>
 <script src="<?=base_url();?>modules/bootcamp07/js/jqGrid/jquery.jqGrid.js"></script>
 <script src="<?=base_url();?>modules/bootcamp07/js/jqGrid/i18n/grid.locale-en.js"></script>
-<script src="<?php echo base_url();?>modules/bootcamp07/js/bootcamp07.js?v=<?=rand(0,20);?>">
-<script src="<?=base_url()?>modules/bootcamp07/js/Ajaxform.js"></script>
-</script>
-
-</body>
+<script src="<?php echo base_url();?>modules/bootcamp07/js/bootcamp07.js?v=<?=rand(0,20);?>"></script>
 <script>
     $(document).ready(function() {
       var grid_selector = $("#userKaryawan");
+	  var rowId = $(this).data("nik");
       grid_selector.on("click", ".edit-button", function () {
         var rowId = $(this).data("nik");
         if (confirm("Are you sure you want to edit this item?")) {
-          console.log("Edit button clicked for row with ID: " + rowId);
+          console.log("Edit button clicked for row with ID: " + editUrl);
         }
       });
       grid_selector.on("click", ".delete-button", function () {
-        var rowId = $(this).data("nik");
-        if (confirm("Are you sure you want to delete this item?")) {
-          console.log("Delete button clicked for row with ID: " + rowId);
-        }
-      });
-    });
+		var deleteUrl = "<?php echo site_url('Bootcamp07/deleteData') ?>";
+        var data = {
+			nik: $(this).data("nik"),
+		};
+        $.ajax({
+			url: deleteUrl,
+			type: "post",
+			data: data,
+			success: function (data) {
+				var message = data.message;
+				alert(message);
+			},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(thrownError);
+		},
+		});
+	}); 
+	});
 </script>
+
+</body>
