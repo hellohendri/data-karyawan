@@ -10,6 +10,7 @@ class Bootcamp02 extends CI_Controller
 		$this->load->model('Bootcamp02_model');
 	}
 
+	// Function Menampilkan Halaman Index
 	public function index()
 	{
 		$user = $this->input->get_post('id');
@@ -17,12 +18,14 @@ class Bootcamp02 extends CI_Controller
 		$this->load->view('Bootcamp02_view', $data);
 	}
 
+	// Function Mendapatkan Data Karyawan
 	public function getKaryawan()
 	{
 		$data = $this->Bootcamp02_model->getListData();
 		echo $data;
 	}
 
+	// Function Menampilkan Form 
 	public function add()
 	{
 		$user = $this->input->get_post('id');
@@ -30,8 +33,10 @@ class Bootcamp02 extends CI_Controller
 		$this->load->view('Bootcamp02_add');
 	}
 
+	// Function POST (Tambah Data atau Update)
 	public function submitadd($nik = null)
 	{
+		// Validasi Untuk Masing Masing Form
 		$this->form_validation->set_rules('nik', 'NIK', 'trim|required|numeric|exact_length[16]|regex_match[/^[0-9]+$/]');
 		$this->form_validation->set_rules('nama', 'Nama', 'trim|required|regex_match[/^[A-Za-z\s]+$/]|max_length[60]');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'trim|required|min_length[3]|max_length[50]');
@@ -58,17 +63,19 @@ class Bootcamp02 extends CI_Controller
 				'created_by' => $this->input->get('id'),
 				'created_time' => date('Y-m-d H:i:s'),
 			);
+			// Pengecekan Kondisi Untuk Action (Tambah Data atau Update)
 			if (!$nik) {
-				//create
+				//Code Tambah Data
 				$this->Bootcamp02_model->save($data);
 			} else {
-				//update
+				//Code Update Data
 				$this->Bootcamp02_model->update($nik, $data);
 			}
 			redirect('bootcamp02?id=' . $this->input->get('id'));
 		}
 	}
 
+	// Function Update Data 
 	public function update($nik)
 	{
 		$karyawan = $this->Bootcamp02_model->findOne($nik);
@@ -77,12 +84,14 @@ class Bootcamp02 extends CI_Controller
 		$this->load->view('Bootcamp02_add', ['karyawan' => $karyawan]);
 	}
 
+	// Function Delete Data 
 	public function delete($nik)
 	{
 		$this->Bootcamp02_model->delete($nik);
 		redirect('bootcamp02?id=' . $this->input->get('id'));
 	}
 
+	// Function Hitung Umur 
 	function countAge($birthdate)
 	{
 		$birthdate = new DateTime($birthdate);
@@ -91,15 +100,16 @@ class Bootcamp02 extends CI_Controller
 		return $diff->y;
 	}
 
+	// Function Validasi Tanggal Lahir (Tidak Boleh Input Tanggal Lahir Diatas Tanggal Hari Ini)
 	public function check_valid_birthdate($str)
 	{
-		// Konversi input tanggal lahir ke objek DateTime
+		// Konversi Input Tanggal Lahir Ke Objek DateTime
 		$input_date = new DateTime($str);
 
-		// Dapatkan tanggal sekarang
+		// Dapatkan Tanggal Sekarang
 		$current_date = new DateTime();
 
-		// Bandingkan tanggal lahir dengan tanggal sekarang
+		// Bandingkan Tanggal Lahir Dengan Tanggal Sekarang
 		if ($input_date > $current_date) {
 			$this->form_validation->set_message('check_valid_birthdate', 'The %s field cannot be a future date.');
 			return FALSE;

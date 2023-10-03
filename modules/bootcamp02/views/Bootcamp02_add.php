@@ -28,10 +28,14 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <h3 class="register-heading">FORM DATA KARYAWAN</h3>
+
+                        <!-- Pengecekan Action Apakah Masuk Action Update atau Tambah Data -->
                         <?php $action = isset($karyawan) ? "submitadd/{$karyawan->nik}" : 'submitadd' ?>
+
+                        <!-- Memasukkan Variabel Action Ke Form Action -->
                         <form action="<?= base_url("bootcamp02/{$action}?id=" . $_GET['id']) ?>" method="POST" id="addkaryawan">
                             <div class="row register-form">
-
+                                <!-- Pengecekan Value Ke Masing Masing Form -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="nik" id="nik" placeholder="NIK" value="<?= $this->form_validation->set_value('nik', isset($karyawan) ? $karyawan->nik : null) ?>" <?php echo isset($karyawan) ? 'disabled' : '' ?>>
@@ -87,22 +91,19 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+    <!-- Script Mengolah Umur dan Menyimpan Value Nya -->
     <script type='text/javascript'>
         function hitungUmur(tanggalLahir) {
             if (tanggalLahir) {
-                console.log(tanggalLahir);
                 var tanggalLahirArray = tanggalLahir.split('-');
-                console.log(tanggalLahirArray);
                 var tahunLahir = parseInt(tanggalLahirArray[0]);
-                console.log(tahunLahir);
                 var bulanLahir = parseInt(tanggalLahirArray[1]);
-                console.log(bulanLahir);
                 var tanggalLahir = parseInt(tanggalLahirArray[2]);
-                console.log(tanggalLahir);
 
                 var tanggalSekarang = new Date();
 
                 var tahunSekarang = tanggalSekarang.getFullYear();
+
                 //Bulan dimulai dari 0 (Januari) hingga 11 (Desember)
                 var bulanSekarang = tanggalSekarang.getMonth() + 1;
                 var tanggalSekarang = tanggalSekarang.getDate();
@@ -118,10 +119,12 @@
             }
         }
 
+        // Script Untuk Ketika Ada Perubahan Pada Tanggal Lahir, Maka Lakukan Hitung Umur
         $('#tanggal_lahir').on('change', function() {
             hitungUmur($(this).val())
         });
 
+        // Script Untuk Ketika Dokumen Siap, Maka Lakukan Hitung Umur
         $(document).ready(function() {
             hitungUmur($('#tanggal_lahir').val())
         });
