@@ -22,7 +22,6 @@ grid_selector.jqGrid({
   datatype: "json",
   height: 394,
   colNames: [
-    "action",
     "NIK",
     "Nama",
     "Tempat Lahir",
@@ -33,15 +32,10 @@ grid_selector.jqGrid({
     "Jabatan",
     "Created By",
     "Created Time",
+    "Edit",
+    "Delete",
   ],
   colModel: [
-    {
-      name: "action",
-      width: 100,
-      sorttype: true,
-      editable: true,
-      formatter: "actions",
-    },
     { name: "nik", width: 150, sortable: false },
     {
       name: "nama",
@@ -95,6 +89,30 @@ grid_selector.jqGrid({
     },
     { name: "created_by", width: 150, sorttype: false, editable: false },
     { name: "created_time", width: 150, sorttype: false, editable: false },
+    {
+      name: "edit",
+      width: 50,
+      sortable: false,
+      formatter: function (cellValue, options, rowObject) {
+        return (
+          '<button class="edit-button" data-nik="' +
+          options.rowId +
+          '">Edit</button>'
+        );
+      },
+    },
+    {
+      name: "delete",
+      width: 60,
+      sortable: false,
+      formatter: function (cellValue, options, rowObject) {
+        return (
+          '<button class="delete-button" data-nik="' +
+          options.rowId +
+          '">Delete</button>'
+        );
+      },
+    },
   ],
 
   shrinkToFit: false,
@@ -111,6 +129,19 @@ grid_selector.jqGrid({
   onSelectRow: function (data) {
     select = true;
   },
+
+  onSelectRow: function (rowid) {
+    select = true;
+    var rowData = $(this).jqGrid("getRowData", rowid);
+    var nik = rowData.nik;
+
+    // Handle row selection if needed
+    // ...
+
+    // Update the Delete button's data attribute
+    $(".delete-button", grid_selector).data("nik", nik);
+  },
+
   loadComplete: function () {
     var table = this;
     setTimeout(function () {
@@ -125,6 +156,32 @@ grid_selector.jqGrid({
 
   autowidth: true,
 });
+
+// Add event listener for delete button click
+$(document).on("click", ".delete-button", function () {
+  var nik = $(this).data("nik");
+  deleteData(nik);
+});
+
+// Function to delete data
+function deleteData(nik) {
+  if (confirm("Are you sure you want to delete this record?")) {
+    $.ajax({
+      url: "index.php/Bootcamp08/deleteAction",
+      type: "POST",
+      data: { nik: nik },
+      success: function (response) {
+        var result = JSON.parse(response);
+        if (result.success) {
+          // Reload jqGrid after successful deletion
+          grid_selector.trigger("reloadGrid");
+        } else {
+          alert("Error: " + result.error);
+        }
+      },
+    });
+  }
+}
 
 jQuery(grid_selector).jqGrid(
   "navGrid",
@@ -211,9 +268,9 @@ jQuery(grid_selector).jqGrid(
     },
     multipleSearch: true,
     /**
-			multipleGroup:true,
-			showQuery: true
-			*/
+		multipleGroup:true,
+		showQuery: true
+		*/
   },
   {
     //view record form
@@ -237,34 +294,34 @@ grid_selector.jqGrid("navButtonAdd", pager_selector, {
 
 function styleCheckbox(table) {
   /**
-		$(table).find('input:checkbox').addClass('ace')
-		.wrap('<label />')
-		.after('<span class="lbl align-top" />')
+	$(table).find('input:checkbox').addClass('ace')
+	.wrap('<label />')
+	.after('<span class="lbl align-top" />')
 
 
-		$('.ui-jqgrid-labels th[id*="_cb"]:first-child')
-		.find('input.cbox[type=checkbox]').addClass('ace')
-		.wrap('<label />').after('<span class="lbl align-top" />');
-	*/
+	$('.ui-jqgrid-labels th[id*="_cb"]:first-child')
+	.find('input.cbox[type=checkbox]').addClass('ace')
+	.wrap('<label />').after('<span class="lbl align-top" />');
+*/
 }
 
 //unlike navButtons icons, action icons in rows seem to be hard-coded
 //you can change them like this in here if you want
 function updateActionIcons(table) {
   /**
-		var replacement = 
-		{
-			'ui-icon-pencil' : 'icon-pencil blue',
-			'ui-icon-trash' : 'icon-trash red',
-			'ui-icon-disk' : 'icon-ok green',
-			'ui-icon-cancel' : 'icon-remove red'
-		};
-		$(table).find('.ui-pg-div span.ui-icon').each(function(){
-			var icon = $(this);
-			var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-			if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-		})
-		*/
+	var replacement = 
+	{
+		'ui-icon-pencil' : 'icon-pencil blue',
+		'ui-icon-trash' : 'icon-trash red',
+		'ui-icon-disk' : 'icon-ok green',
+		'ui-icon-cancel' : 'icon-remove red'
+	};
+	$(table).find('.ui-pg-div span.ui-icon').each(function(){
+		var icon = $(this);
+		var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+		if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+	})
+	*/
 }
 
 //replace icons with FontAwesome icons like above
