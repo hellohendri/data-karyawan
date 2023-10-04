@@ -24,10 +24,27 @@ grid_selector.jqGrid({
 	height: 394,
 	colNames:['Actions', 'NIK','Nama','Tempat Lahir','Tanggal Lahir','Umur', 'Alamat', 'Telp', 'Jabatan', 'Created By', 'Created Time'],
 	colModel:[
-		{name: 'actions', width: 150, sorttype: false, editable: false, formatter: 'actions', formatoptions: {keys: true,
-																											editbutton: true,
-																											delbutton: true,
-																											editformbutton: true}},
+		{name: 'actions', width: 150, sorttype: false, editable: false, formatter: 'actions',
+				formatoptions: {keys: true,
+								editbutton: true,
+								// editoptions: {
+
+								// },
+								delbutton: true,
+								delOptions: {
+									url: function (rowid) {
+										$.ajax({
+											type: "POST",
+											url: SITE_URL+"/bootcamp06/hapus_data" + rowid, // Sesuaikan dengan URL Anda
+											success: function (data) {
+												alert("Berhasil hapus!")
+											},
+											error: function (xhr, status, error) {
+												alert("Terjadi kesalahan!");
+											}
+										});
+								},
+								editformbutton: true}}},
 		{name: 'nik', sortable: false, editable: true, editrules: {required: false, number: true} },
 		{name: 'nama', width: 150, sortable: false, editable: true, editrules: {required: false}, editoptions: {maxlength: 50} },
 		{name: 'tempat_lahir', width: 150, sortable: false, editable: true, editrules: {required: false}},
@@ -66,27 +83,25 @@ grid_selector.jqGrid({
 
 	
 	caption: "Data Karyawan",
-
-	
 	autowidth: true
 
 });
 
 jQuery(grid_selector).jqGrid('navGrid',pager_selector,
 	{ 	//navbar options
-		edit: true,
+		edit: false,
 		editicon : 'icon-pencil blue',
-		add: true,
+		add: false,
 		addicon : 'icon-plus-sign purple',
-		del: true,
+		del: false,
 		delicon : 'icon-trash red',
-		dil: true,
+		dil: false,
 		dilicon : 'icon-trash green',
 		search: true,
 		searchicon : 'icon-search orange',
 		refresh: true,
 		refreshicon : 'icon-refresh green',
-		view: true,
+		view: false,
 		viewicon : 'icon-zoom-in grey',
 	},
 	{
