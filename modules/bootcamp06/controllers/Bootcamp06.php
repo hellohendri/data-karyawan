@@ -23,7 +23,7 @@ class Bootcamp06 extends CI_Controller {
 	}
 
 	function hapus_data($id){
-		$where = array('id' => $id);
+		$where = array('nik' => $id);
 		$this->Bootcamp06_model->delete_data($where,'user');
 		redirect('Bootcamp06/?id=elva');
 	}

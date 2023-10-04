@@ -12,22 +12,17 @@ echo "username : ".$user;
 ?>
 <a href="<?=base_url()?>index.php/bootcamp09/?id=<?=$user?>" style="position:relative;float:right;margin-right:20px;">jqgrid</a>
 
-<form name="formcheck" id="formcheck">
-<input type="text" name="nik" id="nik">&nbsp;<input type="button" name="btncheck" id="btncheck" value="Check">
-</form>
-<div id="tampilan_data"></div>
-
 <form name="formadd" id="formadd">
-<input type="text" name="nik" id="nik"><br>
-<input type="text" name="nama" id="nama"><br>
-<input type="text" name="tempat_lahir" id="tempat_lahir"><br>
-<input type="text" name="tanggal_lahir" id="tanggal_lahir"><br>
-<input type="text" name="umur" id="umur"><br>
-<input type="text" name="alamat" id="alamat"><br>
-<input type="text" name="telp" id="telp"><br>
-<input type="text" name="jabatan" id="jabatan"><br>
-<input type="text" name="created_by" id="created_by"><br>
-<input type="text" name="created_time" id="created_time"><br>
+<input type="text" name="nik" id="nik">
+<input type="text" name="nama" id="nama">
+<input type="text" name="tempat_lahir" id="tempat_lahir">
+<input type="text" name="tanggal_lahir" id="tanggal_lahir">
+<input type="text" name="umur" id="umur">
+<input type="text" name="alamat" id="alamat">
+<input type="text" name="telp" id="telp">
+<input type="text" name="jabatan" id="jabatan">
+<input type="text" name="created_by" id="created_by">
+<input type="text" name="created_time" id="created_time">
 <input type="button" name="btnadd" id="btnadd" value="Add">
 </form>
 <div id="tampilan_data"></div>

@@ -16,18 +16,29 @@ class Bootcamp09 extends CI_Controller {
 	public function index()
 	{
 		$data['user']=$this->input->get_post('id');
-		$data['karyawan']=$this->input->get_post('nik');
 
 		$this->load->view('Bootcamp09_view',$data);
 		
 	}
 	
-	public function index2()
+	public function tambah_Karyawan()
 	{
-		
+		$data['user'] = $this->session->userdata('user_session');
+		$data = $this->Bootcamp09_model->tambah_Karyawan();
+		echo $data;
+	}
 
-		$this->load->view('Bootcamp09_view',$data);
-		
+	public function Add()
+	{
+		$data = $this->Bootcamp09_model->Add();
+		echo $data;
+		#redirect("Bootcamp09");
+	}
+
+	public function tambah_User()
+	{
+		$data = $this->Bootcamp09_model->tambah_User();
+		redirect("Bootcamp09");
 	}
 
 	public function getListData(){
