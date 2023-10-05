@@ -36,8 +36,11 @@ class Bootcamp02 extends CI_Controller
 	// Function POST (Tambah Data atau Update)
 	public function submitadd($nik = null)
 	{
-		// Validasi Untuk Masing Masing Form
-		$this->form_validation->set_rules('nik', 'NIK', 'trim|required|numeric|exact_length[16]|regex_match[/^[0-9]+$/]');
+		// Validasi NIK
+		if (!$nik) {
+			$this->form_validation->set_rules('nik', 'NIK', 'trim|required|numeric|exact_length[16]|regex_match[/^[0-9]+$/]');
+		}
+		// Validasi Untuk Masing Masing Form Lainnya
 		$this->form_validation->set_rules('nama', 'Nama', 'trim|required|regex_match[/^[A-Za-z\s]+$/]|max_length[60]');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'trim|required|min_length[3]|max_length[50]');
 		$this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'trim|required|callback_check_valid_birthdate');
@@ -52,7 +55,7 @@ class Bootcamp02 extends CI_Controller
 		} else {
 			// Kondisi Jika Validasi Berhasil
 			$data = array(
-				'nik' => $this->input->post('nik'),
+				// 'nik' => $this->input->post('nik'),
 				'nama' => $this->input->post('nama'),
 				'tempat_lahir' => $this->input->post('tempat_lahir'),
 				'tanggal_lahir' => $this->input->post('tanggal_lahir'),
@@ -66,6 +69,7 @@ class Bootcamp02 extends CI_Controller
 			// Pengecekan Kondisi Untuk Action (Tambah Data atau Update)
 			if (!$nik) {
 				//Code Tambah Data
+				$data['nik'] = $this->input->post('nik');
 				$this->Bootcamp02_model->save($data);
 			} else {
 				//Code Update Data
