@@ -49,6 +49,9 @@ class Bootcamp03_model extends CI_Model
         $search = $this->input->get_post('search', true);
 
         if ($search != '') {
+            $this->db->select('*');
+            $this->db->where('created_by', $userid);
+            $this->db->group_start();
             $this->db->like('nik', $search);
             $this->db->or_like('nama', $search);
             $this->db->or_like('tempat_lahir', $search);
@@ -57,7 +60,8 @@ class Bootcamp03_model extends CI_Model
             $this->db->or_like('alamat', $search);
             $this->db->or_like('telp', $search);
             $this->db->or_like('jabatan', $search);
-            $result = $this->db->get_where('karyawan', array('created_by' => $userid))->result_array();
+            $this->db->group_end();
+            $result = $this->db->get('karyawan')->result_array();
             return json_encode($result);
         } else {
             $result = $this->db->get_where('karyawan', array('created_by' => $userid))->result_array();
