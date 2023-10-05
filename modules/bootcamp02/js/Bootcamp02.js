@@ -38,7 +38,7 @@ grid_selector.jqGrid({
 			name: 'actions', width: 200, align: 'center',
 			formatter: function (cellValue, options, rowObject) {
 				var btn = '<a class="btn" href="' + BASE_URL + '/update/' + rowObject.nik + '?id=' + USER_ID + '"> Edit</a > ';
-				btn += '<a class="btn" href="' + BASE_URL + '/delete/' + rowObject.nik + '?id=' + USER_ID + '"> Hapus</a > ';
+				btn += '<a class="btn" href="' + BASE_URL + '/delete/' + rowObject.nik + '?id=' + USER_ID + '" onclick="return confirm(\'Anda Yakin Akan Menghapus Data Karyawan ' + rowObject.nama + '\');"> Hapus</a > ';
 				return btn;
 			}
 		},

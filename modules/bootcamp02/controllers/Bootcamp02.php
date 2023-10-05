@@ -36,8 +36,11 @@ class Bootcamp02 extends CI_Controller
 	// Function POST (Tambah Data atau Update)
 	public function submitadd($nik = null)
 	{
-		// Validasi Untuk Masing Masing Form
-		$this->form_validation->set_rules('nik', 'NIK', 'trim|required|numeric|exact_length[16]|regex_match[/^[0-9]+$/]');
+		// Validasi NIK
+		if (!$nik) {
+			$this->form_validation->set_rules('nik', 'NIK', 'trim|required|numeric|exact_length[16]|regex_match[/^[0-9]+$/]');
+		}
+		// Validasi Untuk Masing Masing Form Lainnya
 		$this->form_validation->set_rules('nama', 'Nama', 'trim|required|regex_match[/^[A-Za-z\s]+$/]|max_length[60]');
 		$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'trim|required|min_length[3]|max_length[50]');
 		$this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'trim|required|callback_check_valid_birthdate');
@@ -52,7 +55,7 @@ class Bootcamp02 extends CI_Controller
 		} else {
 			// Kondisi Jika Validasi Berhasil
 			$data = array(
-				'nik' => $this->input->post('nik'),
+				// 'nik' => $this->input->post('nik'),
 				'nama' => $this->input->post('nama'),
 				'tempat_lahir' => $this->input->post('tempat_lahir'),
 				'tanggal_lahir' => $this->input->post('tanggal_lahir'),
@@ -63,15 +66,27 @@ class Bootcamp02 extends CI_Controller
 				'created_by' => $this->input->get('id'),
 				'created_time' => date('Y-m-d H:i:s'),
 			);
-			// Pengecekan Kondisi Untuk Action (Tambah Data atau Update)
+
 			if (!$nik) {
-				//Code Tambah Data
+				// Tambah Data
+				$data['nik'] = $this->input->post('nik');
 				$this->Bootcamp02_model->save($data);
+				// Tampilkan alert tambah data berhasil
+				echo
+				'<script>
+                	alert("Data Karyawan Berhasil Ditambahkan");
+                	window.location.href = "' . base_url('bootcamp02?id=' . $this->input->get('id')) . '";
+            	</script>';
 			} else {
-				//Code Update Data
+				// Update Data
 				$this->Bootcamp02_model->update($nik, $data);
+				// Tampilkan alert update data berhasil
+				echo
+				'<script>
+                	alert("Data Karyawan Berhasil Diperbarui");
+                	window.location.href = "' . base_url('bootcamp02?id=' . $this->input->get('id')) . '";
+            	</script>';
 			}
-			redirect('bootcamp02?id=' . $this->input->get('id'));
 		}
 	}
 
@@ -88,7 +103,10 @@ class Bootcamp02 extends CI_Controller
 	public function delete($nik)
 	{
 		$this->Bootcamp02_model->delete($nik);
-		redirect('bootcamp02?id=' . $this->input->get('id'));
+		echo '<script>
+                alert("Data Karyawan Berhasil Dihapus");
+                window.location.href = "' . base_url('bootcamp02?id=' . $this->input->get('id')) . '";
+              </script>';
 	}
 
 	// Function Hitung Umur 
