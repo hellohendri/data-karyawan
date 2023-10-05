@@ -180,7 +180,7 @@ $("#delKaryawan").click(function (e) {
                                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                                 }
                             })
-                
+
                             Toast.fire({
                                 icon: 'success',
                                 title: val.message
@@ -210,6 +210,15 @@ $("#delKaryawan").click(function (e) {
             text: 'No rows are selected!'
         })
 
+    }
+
+});
+
+$('#searchBtn').click(function () {
+    var searchVal = $('input#search').val();
+
+    if (searchVal != '') {
+        window.location.href = BASE_URL + 'index.php/bootcamp03/?id=' + USER_ID + '&search=' + searchVal;
     }
 
 });

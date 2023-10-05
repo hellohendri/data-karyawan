@@ -17,6 +17,7 @@ class Bootcamp03 extends CI_Controller
 	public function index()
 	{
 		$data['user'] = $this->input->get_post('id');
+		$data['search'] = $this->input->get_post('search');
 		$data['karyawan'] = $this->Bootcamp03_model->getKaryawan();
 
 		// Initialize session

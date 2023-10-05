@@ -46,9 +46,23 @@ class Bootcamp03_model extends CI_Model
     public function getKaryawan()
     {
         $userid = $this->input->get_post('id', true);
-        $result = $this->db->get_where('karyawan', array('created_by' => $userid))->result_array();
+        $search = $this->input->get_post('search', true);
 
-        return json_encode($result);
+        if ($search != '') {
+            $this->db->like('nik', $search);
+            $this->db->or_like('nama', $search);
+            $this->db->or_like('tempat_lahir', $search);
+            $this->db->or_like('tanggal_lahir', $search);
+            $this->db->or_like('umur', $search);
+            $this->db->or_like('alamat', $search);
+            $this->db->or_like('telp', $search);
+            $this->db->or_like('jabatan', $search);
+            $result = $this->db->get_where('karyawan', array('created_by' => $userid))->result_array();
+            return json_encode($result);
+        } else {
+            $result = $this->db->get_where('karyawan', array('created_by' => $userid))->result_array();
+            return json_encode($result);
+        }
     }
 
     public function addKaryawan()
@@ -142,7 +156,7 @@ class Bootcamp03_model extends CI_Model
     {
         $this->db->delete('karyawan', $where);
 
-        if ( $this->db->affected_rows() > 0) {
+        if ($this->db->affected_rows() > 0) {
             $data = array('status' => 'success', 'message' => 'Data karyawan berhasil dihapus');
         } else {
             $data = array('status' => 'error', 'message' => 'Gagal hapus data karyawan');

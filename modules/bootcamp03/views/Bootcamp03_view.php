@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>modules/bootcamp03/css/jquery-ui.css" />
     <link rel="stylesheet" href="<?= base_url() ?>modules/bootcamp03/css/ui.jqgrid.css" />
     <link rel="stylesheet" href="<?= base_url() ?>modules/bootcamp03/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -17,12 +18,25 @@
 
         <?php
         echo "<p>Username : " . $user . "</p>";
+
+        if ($search != '') {
+            echo "<p>Searching for : " . $search . "</p>";
+        }
+        
         ?>
 
         <div class="button-wrapper">
             <div class="export-wrapper">
                 <a href="<?php echo base_url('index.php/bootcamp03/exportToExcel'); ?>" class="btn btn-success" id="excelExport">Export to Excel</a>
             </div>
+
+            <div class="input-group">
+                <input type="text" class="form-control" id="search">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button" id="searchBtn"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+
             <div class="crud-wrapper">
                 <button type="button" class="btn btn-primary" id="toggleModalAdd">Add</button>
                 <button type="button" class="btn btn-warning" id="editKaryawan">Edit</button>
@@ -175,6 +189,7 @@
 
     <script type="text/javascript">
         var USER_ID = '<?= $user ?>';
+        var SEARCH = '<?= $search ?>';
         var BASE_URL = '<?= base_url() ?>';
         var SITE_URL = '<?= site_url() ?>';
     </script>
